@@ -13,6 +13,9 @@ drivers/
 # Compiled class file
 *.class
 
+# Executable files
+*.exe
+
 # Log file
 *.log
 

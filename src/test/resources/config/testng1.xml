@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="FunctionlTestSuite">
+	<test name="IntegrationTest" preserve-order="true">
+		<groups>
+			<define name="integration">
+				<include name="integration1" />
+				<include name="integration2" />
+			</define>
+			<run>
+				<include name="integration" />
+			</run>
+		</groups>
+		<classes>
+			<class name="com.automator.tests.IntegrationTest"></class>
+		</classes>
+
+	</test>
+</suite>
