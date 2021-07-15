@@ -20,6 +20,7 @@
 		<!-- Environment -->
 		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
 		<maven-surefire.version>2.20</maven-surefire.version>
+		<maven-jar.version>3.1.0</maven-jar.version>
 		<java.version>1.8</java.version>
 		<!-- Logging -->
 		<log4j.version>1.2.17</log4j.version>
@@ -36,7 +37,7 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- Compiler plugin configuration -->
+				<!-- Maven Compiler plugin configuration -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -47,7 +48,7 @@
 					</configuration>
 				</plugin>
 
-				<!-- Surefire plugin configuration to execute tests -->
+				<!-- Maven Surefire plugin configuration to execute tests -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -55,10 +56,27 @@
 					<configuration>
 						<!-- <testFailureIgnore>true</testFailureIgnore> -->
 						<suiteXmlFiles>
-							<suiteXmlFile>src/test/resources/com/fimautomation/tests/configs/main_testng.xml</suiteXmlFile>
+							<suiteXmlFile>src/test/resources/config/main_testng.xml</suiteXmlFile>
 						</suiteXmlFiles>
 					</configuration>
 				</plugin>
+
+				<!-- Maven Jar Plugin configuration to build an executable JAR -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven-jar.version}</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>lib/</classpathPrefix>
+								<mainClass>com.automator.tests.runner.TestNGRunner</mainClass>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>
