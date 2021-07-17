@@ -3,8 +3,6 @@
 <suite name="MainTestSuite">
 	<suite-files>
 		<suite-file path="testng1.xml" />
-		<suite-file path="testng2.xml" />
-		<!-- <suite-file path="testng3.xml" /> -->
 	</suite-files>
 </suite>
 
