@@ -1,4 +1,4 @@
-package com.automator.businessLayer.Opencart;
+package com.automator.businessLayer.opencart;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;

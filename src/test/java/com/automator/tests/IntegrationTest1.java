@@ -13,7 +13,8 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-import com.automator.businessLayer.Opencart.Opencart;
+
+import com.automator.businessLayer.opencart.Opencart;
 import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
 import com.automator.handlers.dataHandler.TestSuiteMetaDataHandler;
