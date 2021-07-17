@@ -72,7 +72,7 @@ public class ExcelReportHandler {
 		headerRow_CellStyle_CoverPage_Sheet.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		// create the header row cell for the Cover Page (first sheet)
 		Cell headerRow_MergedCell_CoverPage_Sheet = headerRow_CoverPage_Sheet.createCell(0);
-		headerRow_MergedCell_CoverPage_Sheet.setCellValue("FIM AUTOMATION - AUTOMATION EXECUTION RESULTS SUMMARY");
+		headerRow_MergedCell_CoverPage_Sheet.setCellValue("AUTOMATOR - AUTOMATION EXECUTION RESULTS SUMMARY");
 		headerRow_MergedCell_CoverPage_Sheet.setCellStyle(headerRow_CellStyle_CoverPage_Sheet);
 		// create the cell style for the other rows
 		CellStyle otherRows_CellStyle_CoverPage_Sheet = workbook.createCellStyle();
@@ -108,7 +108,7 @@ public class ExcelReportHandler {
 		thirdRow_FirstCell_CoverPage_Sheet.setCellValue("Run Configuration");
 		thirdRow_FirstCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
 		Cell thirdRow_SecondCell_CoverPage_Sheet = thirdRow_CoverPage_Sheet.createCell(1);
-		thirdRow_SecondCell_CoverPage_Sheet.setCellValue(": CCB");
+		thirdRow_SecondCell_CoverPage_Sheet.setCellValue(": N/A");
 		thirdRow_SecondCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
 		Cell thirdRow_ThirdCell_CoverPage_Sheet = thirdRow_CoverPage_Sheet.createCell(2);
 		thirdRow_ThirdCell_CoverPage_Sheet.setCellValue("");
@@ -282,7 +282,7 @@ public class ExcelReportHandler {
 		// create the header row cell for the CoverPage (first sheet)
 		Cell headerRow_MergedCell_CoverPage_Sheet = headerRow_CoverPage_Sheet.createCell(0);
 		headerRow_MergedCell_CoverPage_Sheet
-				.setCellValue("FIM Automation - " + testSuiteName + " - AUTOMATION EXECUTION RESULTS");
+				.setCellValue("AUTOMATOR - " + testSuiteName + " - AUTOMATION EXECUTION RESULTS");
 		headerRow_MergedCell_CoverPage_Sheet.setCellStyle(headerRow_CellStyle_CoverPage_Sheet);
 		// create the cell style for the other rows
 		CellStyle otherRows_CellStyle_CoverPage_Sheet = workbook.createCellStyle();

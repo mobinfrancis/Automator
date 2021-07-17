@@ -7,8 +7,8 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 public class ExtentReportHandler {
 
 	public ExtentHtmlReporter configureExtentHtmlReporter(ExtentHtmlReporter extentHtmlReporter) {
-		extentHtmlReporter.config().setDocumentTitle("FIMAutomation");
-		extentHtmlReporter.config().setReportName("FIMAutomation Extent Report");
+		extentHtmlReporter.config().setDocumentTitle("AUTOMATOR");
+		extentHtmlReporter.config().setReportName("AUTOMATOR Extent Report");
 		extentHtmlReporter.config().setTheme(Theme.DARK);
 		extentHtmlReporter.config().setTimeStampFormat("dd-MMM-yyyy_hh-mm-ss_aa");
 		return extentHtmlReporter;
