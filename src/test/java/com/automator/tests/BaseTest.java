@@ -37,10 +37,4 @@ public class BaseTest {
 		log.info("=============== Ending Test Suite: " + testSuiteName.getSuite().getName() + " ===============");
 	}
 
-	public void captureAndAttachScreenshotForExtentReport(String extentLog, String testStep, ExtentTest extentTest,
-			WebDriver driver, String testSuiteName, String testName) {
-		frameworkReportHandler.captureAndAttachScreenshotForExtentReport(extentLog, testStep, extentTest, driver,
-				testSuiteName, testName);
-	}
-
 }

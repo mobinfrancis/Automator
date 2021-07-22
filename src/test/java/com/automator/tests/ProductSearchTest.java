@@ -47,13 +47,14 @@ public class ProductSearchTest extends BaseTest {
 		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
 		Opencart opencart = new Opencart();
 		opencart.visit(url);
-		captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url, extentTest.get(),
-				opencart.getDriver(), testSuiteName, testMethodName);
+		opencart.searchProduct("iphone");
+		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
+				extentTest.get(), opencart.getDriver(), testSuiteName, testMethodName);
 		opencart.getDriver().quit();
 	}
 
 	@AfterMethod
-	public void opencartTestTearDown(Method method, ITestResult iTestResult, ITestContext iTestContext) {
+	public void after(Method method, ITestResult iTestResult, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		frameworkReportHandler.appendOverallResultToExtentReportForEachTest(iTestResult, extentTest.get(),
 				testSuiteName);
