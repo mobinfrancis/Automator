@@ -1,5 +1,6 @@
 package com.automator.tests;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,36 +15,40 @@ import org.testng.annotations.Test;
 import com.automator.businessLayer.opencart.Opencart;
 import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
+import com.automator.handlers.fileHandler.PropertyFileHandler;
 
 public class ProductSearchTest extends BaseTest {
 
 	private static final Logger log = Logger.getLogger(ProductSearchTest.class);
 
 	@Test
-	public void validateProductSearch(Method method, ITestContext iTestContext) {
-		log.info("=============== Initiating Test: " + method.getName() + " ===============");
+	public void validateProductSearchTest(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
-		String testName = method.getName();
-		String url = "http://opencart.abstracta.us/";
+		String testMethodName = testMethod.getName();
+		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
 		ConfigController configController = new ConfigController();
+		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
+		String url = null;
+		if (configController.doesSystemPropertyConfigExistFor("ProductSearchTestPropertyFile")) {
+			url = propertyFileHandler.getDataFromPropertiesFile("url",
+					System.getProperty("ProductSearchTestPropertyFile"));
+		} else {
+			String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
+					+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
+			url = propertyFileHandler.getDataFromPropertiesFile("url",
+					configFileRootPath + "ProductSearchTest.properties");
+		}
 		ExcelFileHandler excelFileHandler = new ExcelFileHandler();
-		// to get data from the "Properties" file
-		url = configController.doesSystemPropertyConfigExistFor("propertyFile")
-				? configController.getDataFromPropertiesFile("url1", System.getProperty("propertyFile"))
-				: url;
-		// to get data from the System Configuration Environment (System Properties)
-		url = configController.doesSystemPropertyConfigExistFor("urlForOpenCartTest1")
-				? System.getProperty("urlForOpenCartTest1")
-				: url;
-		// to get data from excel file
-		excelFileHandler.loadExcelForTheTest("./src/test/resources/data/OpenCartData.xlsx", "DataSheet1", testName);
-		url = excelFileHandler.getData("URL");
-		// start test
-		extentTest.set(frameworkReportHandler.getExtentReports().createTest("OpenCart Test 1"));
-		Opencart opencart = new Opencart(testSuiteName, testName);
+		excelFileHandler.loadExcelForTheTest("./src/test/resources/data/OpenCartData.xlsx", "DataSheet1",
+				testMethodName);
+		if (!excelFileHandler.getData("url").isEmpty() && excelFileHandler.getData("url") != null) {
+			url = excelFileHandler.getData("url");
+		}
+		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
+		Opencart opencart = new Opencart();
 		opencart.visit(url);
 		captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url, extentTest.get(),
-				opencart.getDriver(), testSuiteName, testName);
+				opencart.getDriver(), testSuiteName, testMethodName);
 		opencart.getDriver().quit();
 	}
 

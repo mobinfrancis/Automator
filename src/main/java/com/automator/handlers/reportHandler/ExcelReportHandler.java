@@ -26,6 +26,12 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import com.automator.handlers.exceptionHandler.FrameworkException;
 import com.automator.tests.runner.MainTestSuiteRunner;
 
+/**
+ * This class handles the creation of Excel Report
+ * 
+ * @author Sumon Dey, July 22, 2021
+ *
+ */
 public class ExcelReportHandler {
 
 	public void createTestSuiteExcelReport(String testSuiteExcelReportFilePath, String testSuiteName) {

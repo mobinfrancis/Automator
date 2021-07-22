@@ -16,7 +16,8 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 /**
  * This class handles the creation of different reports like ExtentReport, Excel
- * Report etc.
+ * Report etc. by interacting with individual report handler classes like
+ * ExtentReportHandler, ExcelReportHandler
  * 
  * @author Sumon Dey, July 22, 2021
  *

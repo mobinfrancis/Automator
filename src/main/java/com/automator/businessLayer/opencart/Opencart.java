@@ -9,8 +9,6 @@ import com.automator.handlers.PageHandler;
 public class Opencart {
 
 	private WebDriver driver;
-	private String testSuiteName;
-	private String testName;
 	private PageHandler pageHandler;
 	private WebDriverController webDriverController;
 	private static final Logger log = Logger.getLogger(Opencart.class);
@@ -19,21 +17,8 @@ public class Opencart {
 
 	}
 
-	public Opencart(String testSuiteName, String testName) {
-		this.testSuiteName = testSuiteName;
-		this.testName = testName;
-	}
-
 	public WebDriver getDriver() {
 		return driver;
-	}
-
-	public String getTestSuiteName() {
-		return testSuiteName;
-	}
-
-	public String getTestName() {
-		return testName;
 	}
 
 	private WebDriver initializeAndGetDriver() {
