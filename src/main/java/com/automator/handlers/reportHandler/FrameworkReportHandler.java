@@ -14,7 +14,13 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
-
+/**
+ * This class handles the creation of different reports like ExtentReport, Excel
+ * Report etc.
+ * 
+ * @author Sumon Dey, July 22, 2021
+ *
+ */
 public class FrameworkReportHandler {
 
 	private ExtentReports extentReports;
@@ -132,7 +138,8 @@ public class FrameworkReportHandler {
 	}
 
 	public void flushExcelReport(Map<String, ArrayList<String>> testSuiteMetaDataMap, String testSuiteExecutionTime) {
-		excelReportHandler.addTestSuiteMetaDataToExcelReport(testSuiteExcelReportFilePath, testSuiteMetaDataMap, testSuiteExecutionTime);
+		excelReportHandler.addTestSuiteMetaDataToExcelReport(testSuiteExcelReportFilePath, testSuiteMetaDataMap,
+				testSuiteExecutionTime);
 	}
 
 	public void setExcelReportParentFolderPath(String parentReportsFolderPath) {
