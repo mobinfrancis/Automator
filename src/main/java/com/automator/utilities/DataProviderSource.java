@@ -6,9 +6,9 @@ import org.testng.annotations.DataProvider;
 
 public class DataProviderSource {
 
-	@DataProvider(name = "dataProvider1")
-	public static Object[][] getDataFromDataProvider1() {
-		return new Object[][] { { "", "" }, { "", "" }, { "", "" } };
+	@DataProvider(name = "productsToSearch")
+	public static Object[][] getProductsToSearch() {
+		return new Object[][] { { "iphone" }, { "computer" } };
 	}
 
 	@DataProvider(name = "dataProvider2")

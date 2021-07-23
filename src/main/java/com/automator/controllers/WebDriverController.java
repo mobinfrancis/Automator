@@ -19,9 +19,9 @@ public class WebDriverController {
 
 	private WebDriver initializeWebDriver(WebDriver driver) {
 		String browserName = null;
-		browserController = new BrowserController();
-		configController = new ConfigController();
-		if (configController.doesSystemPropertyConfigExistFor("Browser")) {
+		this.browserController = new BrowserController();
+		this.configController = new ConfigController();
+		if (this.configController.doesSystemPropertyConfigExistFor("Browser")) {
 			browserName = System.getProperty("Browser");
 		} else {
 			browserName = "Chrome";// properties.getProperty("Browser");
@@ -29,29 +29,22 @@ public class WebDriverController {
 		log.info("Running tests in browser: " + browserName);
 		switch (browserName.toLowerCase()) {
 		case "chrome":
-			driver = browserController.chromeSetUp(driver);
+			driver = this.browserController.chromeSetUp(driver);
 			break;
 		case "firefox":
-			driver = browserController.firefoxSetUp(driver);
+			driver = this.browserController.firefoxSetUp(driver);
 			break;
 		case "edge":
-			driver = browserController.edgeSetUp(driver);
+			driver = this.browserController.edgeSetUp(driver);
 			break;
 		case "safari":
-			driver = browserController.safariSetUp(driver);
+			driver = this.browserController.safariSetUp(driver);
 			break;
 		default:
 			log.error("The framework does not support running tests on the browser: " + browserName);
 			break;
 		}
 		return driver;
-	}
-
-	public void quitDriver() {
-		if (driver != null) {
-			driver.quit();
-			log.info("WebDriver session ended and browser(s) exited");
-		}
 	}
 
 }

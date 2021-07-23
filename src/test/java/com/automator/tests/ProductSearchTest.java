@@ -12,17 +12,18 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import com.automator.businessLayer.opencart.Opencart;
+import com.automator.businessLayer.opencart.ProductSearch;
 import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
+import com.automator.utilities.DataProviderSource;
 
 public class ProductSearchTest extends BaseTest {
 
 	private static final Logger log = Logger.getLogger(ProductSearchTest.class);
 
-	@Test
-	public void validateProductSearchTest(Method testMethod, ITestContext iTestContext) {
+	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class)
+	public void validateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
@@ -45,12 +46,19 @@ public class ProductSearchTest extends BaseTest {
 			url = excelFileHandler.getData("url");
 		}
 		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
-		Opencart opencart = new Opencart();
-		opencart.visit(url);
-		opencart.searchProduct("iphone");
+		ProductSearch productSearch = new ProductSearch();
+		productSearch.visit(url);
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
-				extentTest.get(), opencart.getDriver(), testSuiteName, testMethodName);
-		opencart.getDriver().quit();
+				extentTest.get(), productSearch.getDriver(), testSuiteName, testMethodName);
+		productSearch.searchProduct(productToSearch);
+		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info",
+				"Searched the product: " + productToSearch, extentTest.get(), productSearch.getDriver(), testSuiteName,
+				testMethodName);
+		productSearch.validateTheSearchedProductHeading();
+		productSearch.validateTheSearchedProductSubheading();
+		productSearch.validateTheTextPresentInSearchCriteriaTextBox();
+		productSearch.validateTheSearchButtonIsEnabled();
+		productSearch.end();
 	}
 
 	@AfterMethod
