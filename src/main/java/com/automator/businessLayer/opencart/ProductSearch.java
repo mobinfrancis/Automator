@@ -58,6 +58,18 @@ public class ProductSearch {
 		Assert.assertTrue(this.searchPageComponent.getSearchButton().isEnabled());
 	}
 
+	public void validateCorrectProductItemIsDisplayedIfPresent() {
+		if (this.searchedProductName.toLowerCase().equals("iphone")) {
+			Assert.assertEquals(this.searchPageComponent.getIPhoneImage().getAttribute("alt"), "iPhone");
+			Assert.assertEquals(this.searchPageComponent.getIPhoneImage().getAttribute("title"), "iPhone");
+			Assert.assertEquals(this.searchPageComponent.getIPhoneImageCaption().getText(), "iPhone");
+			Assert.assertEquals(this.searchPageComponent.getIPhoneImageText().getText(),
+					"iPhone is a revolutionary new mobile phone that allows you to make a call by simply tapping a name o..");
+			Assert.assertTrue(this.searchPageComponent.getIPhoneImagePrice().getText().contains("$123.20")
+					&& this.searchPageComponent.getIPhoneImagePrice().getText().contains("Ex Tax: $101.00"));
+		}
+	}
+
 	public void end() {
 		if (this.driver != null) {
 			this.driver.quit();

@@ -19,12 +19,12 @@ import com.automator.handlers.dataHandler.ExcelFileHandler;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
 import com.automator.utilities.DataProviderSource;
 
-public class ProductSearchTest extends BaseTest {
+public class UITest extends BaseTest {
 
-	private static final Logger log = Logger.getLogger(ProductSearchTest.class);
+	private static final Logger log = Logger.getLogger(UITest.class);
 
-	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class)
-	public void validateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
+	@Test
+	public void validateTheNavigationLinks(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
@@ -47,20 +47,19 @@ public class ProductSearchTest extends BaseTest {
 			url = excelFileHandler.getData("url");
 		}
 		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
-		ProductSearch productSearch = new ProductSearch();
-		productSearch.visit(url);
+		ItemsFunctionality itemsFunctionality = new ItemsFunctionality();
+		itemsFunctionality.visit(url);
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
-				extentTest.get(), productSearch.getDriver(), testSuiteName, testMethodName);
-		productSearch.searchProduct(productToSearch);
-		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info",
-				"Searched the product: " + productToSearch, extentTest.get(), productSearch.getDriver(), testSuiteName,
-				testMethodName);
-		productSearch.validateTheSearchedProductHeading();
-		productSearch.validateTheSearchedProductSubheading();
-		productSearch.validateTheTextPresentInSearchCriteriaTextBox();
-		productSearch.validateTheSearchButtonIsEnabled();
-		productSearch.validateCorrectProductItemIsDisplayedIfPresent();
-		productSearch.end();
+				extentTest.get(), itemsFunctionality.getDriver(), testSuiteName, testMethodName);
+		itemsFunctionality.validateNavbarItemIsEnabled("Desktops");
+		itemsFunctionality.validateNavbarItemIsEnabled("Laptops & Notebooks");
+		itemsFunctionality.validateNavbarItemIsEnabled("Components");
+		itemsFunctionality.validateNavbarItemIsEnabled("Tablets");
+		itemsFunctionality.validateNavbarItemIsEnabled("Software");
+		itemsFunctionality.validateNavbarItemIsEnabled("Phones & PDAs");
+		itemsFunctionality.validateNavbarItemIsEnabled("Cameras");
+		itemsFunctionality.validateNavbarItemIsEnabled("MP3 Players");
+		itemsFunctionality.end();
 	}
 
 	@AfterMethod

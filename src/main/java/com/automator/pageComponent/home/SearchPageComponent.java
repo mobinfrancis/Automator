@@ -17,6 +17,10 @@ public class SearchPageComponent extends WebDriverAction {
 	private final By searchContentSubheading = By.xpath("//h2");
 	private final By searchCriteriaTextBox = By.id("input-search");
 	private final By searchButton = By.id("button-search");
+	private final By iPhoneImage = By.xpath("//div[contains(@class,'product-grid')]/div/div/a/img");
+	private final By iPhoneImageCaption = By.xpath("//div[@class='caption']/h4/a");
+	private final By iPhoneImageText = By.xpath("//div[@class='caption']/p[1]");
+	private final By iPhoneImagePrice = By.xpath("//div[@class='caption']/p[2]");
 
 	public SearchPageComponent(WebDriver driver) {
 		this.driver = driver;
@@ -64,6 +68,22 @@ public class SearchPageComponent extends WebDriverAction {
 
 	public WebElement getSearchButton() {
 		return getWebElement(driver, searchButton);
+	}
+
+	public WebElement getIPhoneImage() {
+		return getWebElement(driver, iPhoneImage);
+	}
+
+	public WebElement getIPhoneImageCaption() {
+		return getWebElement(driver, iPhoneImageCaption);
+	}
+
+	public WebElement getIPhoneImageText() {
+		return getWebElement(driver, iPhoneImageText);
+	}
+
+	public WebElement getIPhoneImagePrice() {
+		return getWebElement(driver, iPhoneImagePrice);
 	}
 
 }
