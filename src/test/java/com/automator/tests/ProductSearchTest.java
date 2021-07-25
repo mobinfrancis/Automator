@@ -12,6 +12,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
+import com.automator.businessLayer.opencart.ItemsFunctionality;
 import com.automator.businessLayer.opencart.ProductSearch;
 import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
@@ -59,6 +60,45 @@ public class ProductSearchTest extends BaseTest {
 		productSearch.validateTheTextPresentInSearchCriteriaTextBox();
 		productSearch.validateTheSearchButtonIsEnabled();
 		productSearch.end();
+	}
+
+	@Test
+	public void validateTheNavigationLinks(Method testMethod, ITestContext iTestContext) {
+		String testSuiteName = iTestContext.getSuite().getName();
+		String testMethodName = testMethod.getName();
+		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
+		ConfigController configController = new ConfigController();
+		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
+		String url = null;
+		if (configController.doesSystemPropertyConfigExistFor("ProductSearchTestPropertyFile")) {
+			url = propertyFileHandler.getDataFromPropertiesFile("url",
+					System.getProperty("ProductSearchTestPropertyFile"));
+		} else {
+			String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
+					+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
+			url = propertyFileHandler.getDataFromPropertiesFile("url",
+					configFileRootPath + "ProductSearchTest.properties");
+		}
+		ExcelFileHandler excelFileHandler = new ExcelFileHandler();
+		excelFileHandler.loadExcelForTheTest("./src/test/resources/data/OpenCartData.xlsx", "DataSheet1",
+				testMethodName);
+		if (!excelFileHandler.getData("url").isEmpty() && excelFileHandler.getData("url") != null) {
+			url = excelFileHandler.getData("url");
+		}
+		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
+		ItemsFunctionality itemsFunctionality = new ItemsFunctionality();
+		itemsFunctionality.visit(url);
+		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
+				extentTest.get(), itemsFunctionality.getDriver(), testSuiteName, testMethodName);
+		itemsFunctionality.validateNavbarItemIsEnabled("Desktops");
+		itemsFunctionality.validateNavbarItemIsEnabled("Laptops & Notebooks");
+		itemsFunctionality.validateNavbarItemIsEnabled("Components");
+		itemsFunctionality.validateNavbarItemIsEnabled("Tablets");
+		itemsFunctionality.validateNavbarItemIsEnabled("Software");
+		itemsFunctionality.validateNavbarItemIsEnabled("Phones & PDAs");
+		itemsFunctionality.validateNavbarItemIsEnabled("Cameras");
+		itemsFunctionality.validateNavbarItemIsEnabled("MP3 Players");
+		itemsFunctionality.end();
 	}
 
 	@AfterMethod

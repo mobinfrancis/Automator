@@ -8,7 +8,7 @@ public class DataProviderSource {
 
 	@DataProvider(name = "productsToSearch")
 	public static Object[][] getProductsToSearch() {
-		return new Object[][] { { "iphone" }, { "computer" } };
+		return new Object[][] { { "iphone" } };
 	}
 
 	@DataProvider(name = "dataProvider2")
