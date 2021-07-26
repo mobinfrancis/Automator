@@ -32,6 +32,7 @@
 		<commonsIO.version>2.7</commonsIO.version>
 		<webdrivermanager.version>3.7.1</webdrivermanager.version>
 		<jackson.version>2.11.2</jackson.version>
+		<mysql-connector.version>8.0.26</mysql-connector.version>
 	</properties>
 
 	<build>
@@ -136,6 +137,11 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector.version}</version>
 		</dependency>
 		<!-- WebDriver Manager to manage the browser driver dependencies -->
 		<dependency>
