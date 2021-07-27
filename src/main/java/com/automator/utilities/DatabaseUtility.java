@@ -8,17 +8,15 @@ import java.sql.Statement;
 
 public class DatabaseUtility {
 
-	public void getDataFromMySQLDB() {
+	public ResultSet getDataFromMySQLDB(String queryStatement) {
 		Connection connection = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("MySQL JDBC driver loaded successfully");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/opencart", "", "");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/opencart", "root", "football");
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("select * from products");
-			while (resultSet.next()) {
-				System.out.println(resultSet.getString("product_id") + " -> " + resultSet.getString("product_name"));
-			}
+			ResultSet resultSet = statement.executeQuery(queryStatement);
+			return resultSet;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -30,7 +28,7 @@ public class DatabaseUtility {
 				e.printStackTrace();
 			}
 		}
-
+		return null;
 	}
 
 }

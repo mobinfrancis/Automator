@@ -2,6 +2,8 @@ package com.automator.tests;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,14 +18,16 @@ import com.automator.businessLayer.opencart.ItemsFunctionality;
 import com.automator.businessLayer.opencart.ProductSearch;
 import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
+import com.automator.handlers.exceptionHandler.FrameworkException;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
 import com.automator.utilities.DataProviderSource;
+import com.automator.utilities.DatabaseUtility;
 
 public class ProductSearchTest extends BaseTest {
 
 	private static final Logger log = Logger.getLogger(ProductSearchTest.class);
 
-	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class)
+	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class, enabled = false)
 	public void validateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
@@ -51,6 +55,7 @@ public class ProductSearchTest extends BaseTest {
 		productSearch.visit(url);
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
 				extentTest.get(), productSearch.getDriver(), testSuiteName, testMethodName);
+		log.info("Product being searched is: " + productToSearch);
 		productSearch.searchProduct(productToSearch);
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info",
 				"Searched the product: " + productToSearch, extentTest.get(), productSearch.getDriver(), testSuiteName,
@@ -60,6 +65,50 @@ public class ProductSearchTest extends BaseTest {
 		productSearch.validateTheTextPresentInSearchCriteriaTextBox();
 		productSearch.validateTheSearchButtonIsEnabled();
 		productSearch.validateCorrectProductItemIsDisplayedIfPresent();
+		productSearch.end();
+	}
+
+	@Test
+	public void validateProductSearchForProductsInDB(Method testMethod, ITestContext iTestContext) {
+		String testSuiteName = iTestContext.getSuite().getName();
+		String testMethodName = testMethod.getName();
+		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
+		ConfigController configController = new ConfigController();
+		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
+		String url = null;
+		if (configController.doesSystemPropertyConfigExistFor("ProductSearchTestPropertyFile")) {
+			url = propertyFileHandler.getDataFromPropertiesFile("url",
+					System.getProperty("ProductSearchTestPropertyFile"));
+		} else {
+			String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
+					+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
+			url = propertyFileHandler.getDataFromPropertiesFile("url",
+					configFileRootPath + "ProductSearchTest.properties");
+		}
+		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
+		ProductSearch productSearch = new ProductSearch();
+		productSearch.visit(url);
+		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
+				extentTest.get(), productSearch.getDriver(), testSuiteName, testMethodName);
+		DatabaseUtility databaseUtility = new DatabaseUtility();
+		ResultSet resultSet = databaseUtility.getDataFromMySQLDB("select * from products");
+		try {
+			while (resultSet.next()) {
+				String productToSearch = resultSet.getString("product_name");
+				log.info("Product being searched is: " + resultSet.getString("product_name"));
+				productSearch.searchProduct(productToSearch);
+				frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info",
+						"Searched the product: " + productToSearch, extentTest.get(), productSearch.getDriver(),
+						testSuiteName, testMethodName);
+				productSearch.validateTheSearchedProductHeading();
+				productSearch.validateTheSearchedProductSubheading();
+				productSearch.validateTheTextPresentInSearchCriteriaTextBox();
+				productSearch.validateTheSearchButtonIsEnabled();
+				productSearch.validateCorrectProductItemIsDisplayedIfPresent();
+			}
+		} catch (SQLException e) {
+			throw new FrameworkException("Could not retrieve data from the DB");
+		}
 		productSearch.end();
 	}
 
