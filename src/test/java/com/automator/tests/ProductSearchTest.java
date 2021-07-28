@@ -27,7 +27,7 @@ public class ProductSearchTest extends BaseTest {
 
 	private static final Logger log = Logger.getLogger(ProductSearchTest.class);
 
-	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class, enabled = false)
+	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class, enabled = true)
 	public void validateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
@@ -68,7 +68,7 @@ public class ProductSearchTest extends BaseTest {
 		productSearch.end();
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void validateProductSearchForProductsInDB(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();

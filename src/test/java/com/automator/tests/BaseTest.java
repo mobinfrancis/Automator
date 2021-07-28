@@ -12,7 +12,7 @@ import com.aventstack.extentreports.ExtentTest;
 public class BaseTest {
 
 	public FrameworkReportHandler frameworkReportHandler;
-	public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
+	public static InheritableThreadLocal<ExtentTest> extentTest = new InheritableThreadLocal<ExtentTest>();
 	public static final Logger log = Logger.getLogger(BaseTest.class);
 	public TestSuiteMetaDataHandler testSuiteMetaDataHandler;
 
