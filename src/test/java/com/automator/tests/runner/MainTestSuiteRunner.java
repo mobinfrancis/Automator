@@ -9,12 +9,11 @@ import org.testng.xml.XmlSuite;
 
 import com.automator.handlers.reportHandler.FrameworkReportHandler;
 
-
 public class MainTestSuiteRunner {
 
 	public static String totalExecutionTime;
 
-	// java -jar FIMAutomation.jar main_testng.xml
+	// java -jar Automator.jar main_testng.xml
 	public static void main(String[] args) {
 		TestNG testng = new TestNG();
 		TestListenerAdapter adapter = new TestListenerAdapter();
