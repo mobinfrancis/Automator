@@ -12,20 +12,29 @@ import org.apache.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.automator.businessLayer.opencart.ItemsFunctionality;
 import com.automator.businessLayer.opencart.ProductSearch;
 import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
+import com.automator.handlers.dataHandler.TestSuiteMetaDataHandler;
 import com.automator.handlers.exceptionHandler.FrameworkException;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
+import com.automator.handlers.reportHandler.FrameworkReportHandler;
 import com.automator.utilities.DataProviderSource;
 import com.automator.utilities.DatabaseUtility;
+import com.aventstack.extentreports.ExtentTest;
 
-public class ProductSearchTest extends BaseTest {
+public class ProductSearchTest {
 
 	private static final Logger log = Logger.getLogger(ProductSearchTest.class);
+
+	public FrameworkReportHandler frameworkReportHandler;
+	public static InheritableThreadLocal<ExtentTest> extentTest = new InheritableThreadLocal<ExtentTest>();
+	public TestSuiteMetaDataHandler testSuiteMetaDataHandler;
 
 	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class, enabled = true)
 	public void validateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
@@ -114,6 +123,17 @@ public class ProductSearchTest extends BaseTest {
 		productSearch.end();
 	}
 
+	@BeforeSuite
+	public void setup(ITestContext iTestContext) {
+		String testSuiteName = iTestContext.getSuite().getName();
+		log.info("=============== Initiating Test Suite: " + testSuiteName + " ===============");
+		testSuiteMetaDataHandler = new TestSuiteMetaDataHandler(testSuiteName);
+		testSuiteMetaDataHandler.insertTestSuiteStartTime(System.currentTimeMillis());
+		frameworkReportHandler = new FrameworkReportHandler();
+		frameworkReportHandler.initiateExtentReportFormatter(testSuiteName);
+		frameworkReportHandler.initiateExcelReportFormatter(testSuiteName);
+	}
+
 	@AfterMethod
 	public void after(Method method, ITestResult iTestResult, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
@@ -136,6 +156,16 @@ public class ProductSearchTest extends BaseTest {
 		testCaseMetaData.add(testCaseTime);
 		testSuiteMetaDataHandler.insertDataIntoTestSuiteMetaData(testCaseName, testCaseMetaData);
 		log.info("=============== Ending Test: " + method.getName() + " ===============");
+	}
+
+	@AfterSuite
+	public void teardown(ITestContext testSuiteName) {
+		testSuiteMetaDataHandler.insertTestSuiteEndTime(System.currentTimeMillis());
+		testSuiteMetaDataHandler.calculateAndSetTestSuiteExecutionTime();
+		frameworkReportHandler.flushExtentReport();
+		frameworkReportHandler.flushExcelReport(testSuiteMetaDataHandler.getTestSuiteMetaData(),
+				testSuiteMetaDataHandler.getTestSuiteExecutionTime());
+		log.info("=============== Ending Test Suite: " + testSuiteName.getSuite().getName() + " ===============");
 	}
 
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="MainTestSuite">
 	<suite-files>
-		<suite-file path="testng1.xml" />
+		<suite-file path="functionalTestSuite1.xml" />
 	</suite-files>
 </suite>
 
