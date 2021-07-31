@@ -6,29 +6,40 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+import org.testng.annotations.Test;
+
+import com.automator.tests.ProductSearchTest;
+
 public class DatabaseUtility {
 
+	private Connection connection = null;
+	private static final Logger log = Logger.getLogger(DatabaseUtility.class);
+
 	public ResultSet getDataFromMySQLDB(String queryStatement) {
-		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("MySQL JDBC driver loaded successfully");
+			log.info("MySQL JDBC driver is loaded successfully");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/opencart", "root", "football");
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(queryStatement);
-			return resultSet;
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(queryStatement);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
-		return null;
+		return resultSet;
+	}
+
+	public void closeSQLDBConnection() {
+		try {
+			connection.close();
+			log.info("MySQL DB connection is closed successfully");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

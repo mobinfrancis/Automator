@@ -33,6 +33,13 @@ public class SearchPageComponent extends WebDriverAction {
 		return this;
 	}
 
+	public SearchPageComponent clearTextInSearchTextBox() {
+		getWebElement(driver, searchTextBox).clear();
+		log.info("Cleared text in the Search Text Box");
+		Reporter.log("Cleared text in the Search Text Box");
+		return this;
+	}
+
 	public SearchPageComponent clickOnSearchIconButton() {
 		getWebElement(driver, searchIconButton).click();
 		log.info("Clicked on the Search Icon Button");

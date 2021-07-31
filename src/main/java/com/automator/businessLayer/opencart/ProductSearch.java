@@ -36,6 +36,7 @@ public class ProductSearch {
 		this.searchPageComponent = new SearchPageComponent(driver);
 		this.searchPageComponent = this.searchPageComponent.enterTextInSearchTextBox(productToSearch);
 		this.searchPageComponent = this.searchPageComponent.clickOnSearchIconButton();
+		this.searchPageComponent = this.searchPageComponent.clearTextInSearchTextBox();
 		this.searchedProductName = productToSearch;
 
 	}
@@ -74,6 +75,7 @@ public class ProductSearch {
 		if (this.driver != null) {
 			this.driver.quit();
 			log.info("WebDriver session ended and browser(s) exited");
+			this.driver = null;
 		}
 	}
 

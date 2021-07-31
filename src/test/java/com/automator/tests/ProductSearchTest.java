@@ -68,7 +68,7 @@ public class ProductSearchTest extends BaseTest {
 		productSearch.end();
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void validateProductSearchForProductsInDB(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
@@ -91,7 +91,7 @@ public class ProductSearchTest extends BaseTest {
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
 				extentTest.get(), productSearch.getDriver(), testSuiteName, testMethodName);
 		DatabaseUtility databaseUtility = new DatabaseUtility();
-		ResultSet resultSet = databaseUtility.getDataFromMySQLDB("select * from products");
+		ResultSet resultSet = databaseUtility.getDataFromMySQLDB("select * from products;");
 		try {
 			while (resultSet.next()) {
 				String productToSearch = resultSet.getString("product_name");
@@ -108,6 +108,8 @@ public class ProductSearchTest extends BaseTest {
 			}
 		} catch (SQLException e) {
 			throw new FrameworkException("Could not retrieve data from the DB");
+		} finally {
+			databaseUtility.closeSQLDBConnection();
 		}
 		productSearch.end();
 	}
