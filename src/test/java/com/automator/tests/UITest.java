@@ -15,13 +15,12 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.automator.businessLayer.opencart.ItemsFunctionality;
-import com.automator.businessLayer.opencart.ProductSearch;
 import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
 import com.automator.handlers.dataHandler.TestSuiteMetaDataHandler;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
 import com.automator.handlers.reportHandler.FrameworkReportHandler;
-import com.automator.utilities.DataProviderSource;
+import com.automator.handlers.reportHandler.TestCaseExecutionStatus;
 import com.aventstack.extentreports.ExtentTest;
 
 public class UITest {
@@ -89,18 +88,18 @@ public class UITest {
 				testSuiteName);
 		String testCaseName = method.getName();
 		String testCaseDescription = iTestResult.getMethod().getDescription();
-		String testCaseStatus = "";
+		TestCaseExecutionStatus testCaseExecutionStatus = null;
 		if (iTestResult.getStatus() == ITestResult.FAILURE) {
-			testCaseStatus = "FAIL";
+			testCaseExecutionStatus = TestCaseExecutionStatus.FAIL;
 		} else if (iTestResult.getStatus() == ITestResult.SUCCESS) {
-			testCaseStatus = "PASS";
+			testCaseExecutionStatus = TestCaseExecutionStatus.PASS;
 		} else if (iTestResult.getStatus() == ITestResult.SKIP) {
-			testCaseStatus = "SKIP";
+			testCaseExecutionStatus = TestCaseExecutionStatus.SKIP;
 		}
 		String testCaseTime = new SimpleDateFormat("dd-MMM-yyyy hh-mm-ss aa").format(new Date());
 		ArrayList<String> testCaseMetaData = new ArrayList<>();
 		testCaseMetaData.add(testCaseDescription);
-		testCaseMetaData.add(testCaseStatus);
+		testCaseMetaData.add(testCaseExecutionStatus.toString());
 		testCaseMetaData.add(testCaseTime);
 		testSuiteMetaDataHandler.insertDataIntoTestSuiteMetaData(testCaseName, testCaseMetaData);
 		log.info("=============== Ending Test: " + method.getName() + " ===============");
