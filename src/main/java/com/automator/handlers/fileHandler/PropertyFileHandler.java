@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.automator.handlers.exceptionHandler.FrameworkException;
+
 public class PropertyFileHandler {
 
 	private Properties prop = new Properties();
@@ -17,7 +19,7 @@ public class PropertyFileHandler {
 			prop.setProperty(key, value);
 			prop.store(new FileOutputStream(configFileRootPath + configFileName), null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new FrameworkException("Not able to save data into properties file. " + e);
 		}
 	}
 
@@ -28,7 +30,7 @@ public class PropertyFileHandler {
 			prop.load(new FileInputStream(configFilePath));
 			value = prop.getProperty(key);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new FrameworkException("Not able to retrieve data from properties file. " + e);
 		}
 		return value;
 	}

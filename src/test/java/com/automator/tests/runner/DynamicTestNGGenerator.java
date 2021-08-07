@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.testng.TestNG;
@@ -14,69 +12,64 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
+import com.automator.handlers.exceptionHandler.FrameworkException;
+import com.automator.handlers.fileHandler.PropertyFileHandler;
+
 public class DynamicTestNGGenerator {
 
 	private static final Logger log = Logger.getLogger(DynamicTestNGGenerator.class);
+	private String configPath = "./src/test/resources/configs/";
+	private PropertyFileHandler propertyFileHandler;
 
-	public static void main(String[] args) {
+	public static void main(String[] arguments) {
 		DynamicTestNGGenerator dynamicTestNGGenerator = new DynamicTestNGGenerator();
-		Map<String, String> testngParams = new HashMap<String, String>();
-		testngParams.put("device1", "Desktop");
-		testngParams.put("device2", "Mobile");
-		testngParams.put("device3", "Tablet");
-		dynamicTestNGGenerator.runTestNGTest(testngParams);
+		dynamicTestNGGenerator.runTestNGTest();
 	}
 
-	private void runTestNGTest(Map<String, String> testngParams) {
+	private void runTestNGTest() {
+		propertyFileHandler = new PropertyFileHandler();
+		String testngConfigFilePath = configPath + "testng.properties";
 		TestNG testNG = new TestNG();
 		XmlSuite xmlSuite = new XmlSuite();
-		xmlSuite.setName("FunctionlTestSuite2");
+		xmlSuite.setName(propertyFileHandler.getDataFromPropertiesFile("testSuiteName", testngConfigFilePath));
 		xmlSuite.setParallel(XmlSuite.ParallelMode.METHODS);
 		XmlTest xmlTest = new XmlTest(xmlSuite);
-		xmlTest.setName("IntegrationTest2");
-
-		// add groups
-		// myTest.addIncludedGroup("group1");
-		// myTest.addIncludedGroup("group2");
-
-		// Add any parameters that you want to set to the Test.
-		// myTest.setParameters(testngParams);
-
-		List<XmlClass> xmlClasses = new ArrayList<XmlClass>();
-		xmlClasses.add(new XmlClass("com.automator.tests.ProductSearchTest"));
-		xmlClasses.add(new XmlClass("com.automator.tests.UITest"));
+		xmlTest.setName(propertyFileHandler.getDataFromPropertiesFile("testName", testngConfigFilePath));
+		List<XmlClass> xmlClasses = new ArrayList<XmlClass>() {
+			{
+				add(new XmlClass(propertyFileHandler.getDataFromPropertiesFile("className1", testngConfigFilePath)));
+				add(new XmlClass(propertyFileHandler.getDataFromPropertiesFile("className2", testngConfigFilePath)));
+			}
+		};
 		xmlTest.setXmlClasses(xmlClasses);
-
 		List<XmlTest> xmlTests = new ArrayList<XmlTest>();
 		xmlTests.add(xmlTest);
-
 		xmlSuite.setTests(xmlTests);
 		List<XmlSuite> xmlSuites = new ArrayList<XmlSuite>();
 		xmlSuites.add(xmlSuite);
-
 		testNG.setXmlSuites(xmlSuites);
-		xmlSuite.setFileName("functionalTestSuite2.xml");
+		xmlSuite.setFileName(propertyFileHandler.getDataFromPropertiesFile("testngFileName", testngConfigFilePath));
 		xmlSuite.setThreadCount(10);
 		testNG.run();
-
-		// Create physical XML file based on the virtual XML content
 		for (XmlSuite suite : xmlSuites) {
-			createXmlFile(suite);
+			createTestNGXmlFile(suite);
 		}
 		log.info("TestNG xml file named \"" + xmlSuite.getFileName() + "\" is generated successfully");
 
 	}
 
 	// This method will create an Xml file based on the XmlSuite data
-	public void createXmlFile(XmlSuite mSuite) {
+	public void createTestNGXmlFile(XmlSuite xmlSuite) {
 		FileWriter fileWriter;
+		propertyFileHandler = new PropertyFileHandler();
 		try {
-			fileWriter = new FileWriter(new File("functionalTestSuite2.xml"));
-			fileWriter.write(mSuite.toXml());
+			fileWriter = new FileWriter(new File(configPath + propertyFileHandler
+					.getDataFromPropertiesFile("testngFileName", configPath + "testng.properties")));
+			fileWriter.write(xmlSuite.toXml());
 			fileWriter.flush();
 			fileWriter.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new FrameworkException("Not able to create testng xml file at runtime. " + e);
 		}
 	}
 
