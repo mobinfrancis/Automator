@@ -13,6 +13,7 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -37,7 +38,6 @@ public class ProductSearchTest {
 	public void shouldValidateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
-		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
 		String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
 				+ File.separator + "resources" + File.separator + "configs" + File.separator;
@@ -65,7 +65,6 @@ public class ProductSearchTest {
 	public void shouldValidateProductSearchForProductsInDB(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
-		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
 		String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
 				+ File.separator + "resources" + File.separator + "configs" + File.separator;
@@ -101,7 +100,7 @@ public class ProductSearchTest {
 	}
 
 	@BeforeSuite
-	public void setup(ITestContext iTestContext) {
+	public void testSuiteSetup(ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		log.info("=============== Initiating Test Suite: " + testSuiteName + " ===============");
 		testSuiteMetaDataHandler = new TestSuiteMetaDataHandler(testSuiteName);
@@ -111,12 +110,18 @@ public class ProductSearchTest {
 		frameworkReportHandler.initiateExcelReportFormatter(testSuiteName);
 	}
 
+	@BeforeMethod
+	public void testMethodSetup(Method testMethod) {
+		String testMethodName = testMethod.getName();
+		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
+	}
+
 	@AfterMethod
-	public void after(Method method, ITestResult iTestResult, ITestContext iTestContext) {
+	public void testMethodTeardown(Method testMethod, ITestResult iTestResult, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		frameworkReportHandler.appendOverallResultToExtentReportForEachTest(iTestResult, extentTest.get(),
 				testSuiteName);
-		String testCaseName = method.getName();
+		String testCaseName = testMethod.getName();
 		String testCaseDescription = iTestResult.getMethod().getDescription();
 		TestCaseExecutionStatus testCaseExecutionStatus = null;
 		if (iTestResult.getStatus() == ITestResult.FAILURE) {
@@ -132,11 +137,11 @@ public class ProductSearchTest {
 		testCaseMetaData.add(testCaseExecutionStatus.toString());
 		testCaseMetaData.add(testCaseTime);
 		testSuiteMetaDataHandler.insertDataIntoTestSuiteMetaData(testCaseName, testCaseMetaData);
-		log.info("=============== Ending Test: " + method.getName() + " ===============");
+		log.info("=============== Ending Test method: " + testMethod.getName() + " ===============");
 	}
 
 	@AfterSuite
-	public void teardown(ITestContext testSuiteName) {
+	public void testSuiteTeardown(ITestContext testSuiteName) {
 		testSuiteMetaDataHandler.insertTestSuiteEndTime(System.currentTimeMillis());
 		testSuiteMetaDataHandler.calculateAndSetTestSuiteExecutionTime();
 		frameworkReportHandler.flushExtentReport();
