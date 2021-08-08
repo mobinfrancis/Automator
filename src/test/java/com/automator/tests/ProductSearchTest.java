@@ -43,7 +43,6 @@ public class ProductSearchTest {
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
 		String url = propertyFileHandler.getDataFromPropertiesFile("url",
 				configFileRootPath + "ProductSearchTest.properties");
-		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
 		ProductSearch productSearch = new ProductSearch();
 		productSearch.visit(url);
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
@@ -68,7 +67,6 @@ public class ProductSearchTest {
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
 		String url = propertyFileHandler.getDataFromPropertiesFile("url",
 				configFileRootPath + "ProductSearchTest.properties");
-		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
 		ProductSearch productSearch = new ProductSearch();
 		productSearch.visit(url);
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
@@ -112,6 +110,7 @@ public class ProductSearchTest {
 	public void testMethodSetup(Method testMethod) {
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
+		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
 	}
 
 	@AfterMethod

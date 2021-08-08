@@ -38,19 +38,15 @@ public class UITest {
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
 		String url = propertyFileHandler.getDataFromPropertiesFile("url",
 				configFileRootPath + "ProductSearchTest.properties");
-		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
 		ItemsFunctionality itemsFunctionality = new ItemsFunctionality();
 		itemsFunctionality.visit(url);
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
 				extentTest.get(), itemsFunctionality.getDriver(), testSuiteName, testMethodName);
-		itemsFunctionality.validateNavbarItemIsEnabled("Desktops");
-		itemsFunctionality.validateNavbarItemIsEnabled("Laptops & Notebooks");
-		itemsFunctionality.validateNavbarItemIsEnabled("Components");
-		itemsFunctionality.validateNavbarItemIsEnabled("Tablets");
-		itemsFunctionality.validateNavbarItemIsEnabled("Software");
-		itemsFunctionality.validateNavbarItemIsEnabled("Phones & PDAs");
-		itemsFunctionality.validateNavbarItemIsEnabled("Cameras");
-		itemsFunctionality.validateNavbarItemIsEnabled("MP3 Players");
+		String[] searchItems = { "Desktops", "Laptops & Notebooks", "Components", "Tablets", "Software",
+				"Phones & PDAs", "Cameras", "MP3 Players" };
+		for (String searchItem : searchItems) {
+			itemsFunctionality.validateNavbarItemIsEnabled(searchItem);
+		}
 		itemsFunctionality.end();
 	}
 
@@ -69,6 +65,7 @@ public class UITest {
 	public void testMethodSetup(Method testMethod) {
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
+		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
 	}
 
 	@AfterMethod
