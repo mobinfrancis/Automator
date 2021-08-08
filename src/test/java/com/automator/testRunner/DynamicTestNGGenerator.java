@@ -1,4 +1,4 @@
-package com.automator.tests.runner;
+package com.automator.testRunner;
 
 import java.io.File;
 import java.io.FileWriter;

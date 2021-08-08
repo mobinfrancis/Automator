@@ -1,4 +1,4 @@
-package com.automator.tests.runner;
+package com.automator.testRunner;
 
 import java.util.ArrayList;
 import java.util.List;

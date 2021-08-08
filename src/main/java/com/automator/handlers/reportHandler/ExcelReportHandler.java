@@ -24,7 +24,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import com.automator.handlers.exceptionHandler.FrameworkException;
-import com.automator.tests.runner.MainTestSuiteRunner;
+import com.automator.testRunner.MainTestSuiteRunner;
 
 /**
  * This class handles the creation of Excel Report

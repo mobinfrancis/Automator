@@ -72,7 +72,7 @@
 							<manifest>
 								<addClasspath>true</addClasspath>
 								<classpathPrefix>lib/</classpathPrefix>
-								<mainClass>com.automator.tests.runner.DynamicTestNGGenerator</mainClass>
+								<mainClass>com.automator.testRunner.MainTestSuiteRunner</mainClass>
 							</manifest>
 						</archive>
 					</configuration>
