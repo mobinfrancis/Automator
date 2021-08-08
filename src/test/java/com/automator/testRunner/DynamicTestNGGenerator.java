@@ -18,8 +18,9 @@ import com.automator.handlers.fileHandler.PropertyFileHandler;
 public class DynamicTestNGGenerator {
 
 	private static final Logger log = Logger.getLogger(DynamicTestNGGenerator.class);
-	private String configPath = "./src/test/resources/configs/";
 	private PropertyFileHandler propertyFileHandler;
+	private final String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
+			+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
 
 	public static void main(String[] arguments) {
 		DynamicTestNGGenerator dynamicTestNGGenerator = new DynamicTestNGGenerator();
@@ -28,7 +29,7 @@ public class DynamicTestNGGenerator {
 
 	private void runTestNGTest() {
 		propertyFileHandler = new PropertyFileHandler();
-		String testngConfigFilePath = configPath + "testng.properties";
+		String testngConfigFilePath = configFileRootPath + "testng.properties";
 		TestNG testNG = new TestNG();
 		XmlSuite xmlSuite = new XmlSuite();
 		xmlSuite.setName(propertyFileHandler.getDataFromPropertiesFile("testSuiteName", testngConfigFilePath));
@@ -63,8 +64,8 @@ public class DynamicTestNGGenerator {
 		FileWriter fileWriter;
 		propertyFileHandler = new PropertyFileHandler();
 		try {
-			fileWriter = new FileWriter(new File(configPath + propertyFileHandler
-					.getDataFromPropertiesFile("testngFileName", configPath + "testng.properties")));
+			fileWriter = new FileWriter(new File(configFileRootPath + propertyFileHandler
+					.getDataFromPropertiesFile("testngFileName", configFileRootPath + "testng.properties")));
 			fileWriter.write(xmlSuite.toXml());
 			fileWriter.flush();
 			fileWriter.close();

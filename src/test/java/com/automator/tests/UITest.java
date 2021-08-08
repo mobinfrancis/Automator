@@ -28,14 +28,14 @@ public class UITest {
 	private FrameworkReportHandler frameworkReportHandler;
 	private static InheritableThreadLocal<ExtentTest> extentTest = new InheritableThreadLocal<ExtentTest>();
 	private TestSuiteMetaDataHandler testSuiteMetaDataHandler;
+	private final String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
+			+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
 
 	@Test(enabled = true)
 	public void shouldValidateTheNavigationLinks(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
-		String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
-				+ File.separator + "resources" + File.separator + "configs" + File.separator;
 		String url = propertyFileHandler.getDataFromPropertiesFile("url",
 				configFileRootPath + "ProductSearchTest.properties");
 		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
