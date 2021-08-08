@@ -15,7 +15,6 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.automator.businessLayer.opencart.ItemsFunctionality;
-import com.automator.handlers.dataHandler.ExcelFileHandler;
 import com.automator.handlers.dataHandler.TestSuiteMetaDataHandler;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
 import com.automator.handlers.reportHandler.FrameworkReportHandler;
@@ -39,12 +38,6 @@ public class UITest {
 				+ File.separator + "resources" + File.separator + "configs" + File.separator;
 		String url = propertyFileHandler.getDataFromPropertiesFile("url",
 				configFileRootPath + "ProductSearchTest.properties");
-		ExcelFileHandler excelFileHandler = new ExcelFileHandler();
-		excelFileHandler.loadExcelForTheTest("./src/test/resources/data/OpenCartData.xlsx", "DataSheet1",
-				testMethodName);
-		if (!excelFileHandler.getData("url").isEmpty() && excelFileHandler.getData("url") != null) {
-			url = excelFileHandler.getData("url");
-		}
 		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
 		ItemsFunctionality itemsFunctionality = new ItemsFunctionality();
 		itemsFunctionality.visit(url);
