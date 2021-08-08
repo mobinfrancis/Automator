@@ -26,13 +26,12 @@ import com.aventstack.extentreports.ExtentTest;
 public class UITest {
 
 	private static final Logger log = Logger.getLogger(UITest.class);
-
-	public FrameworkReportHandler frameworkReportHandler;
-	public static InheritableThreadLocal<ExtentTest> extentTest = new InheritableThreadLocal<ExtentTest>();
-	public TestSuiteMetaDataHandler testSuiteMetaDataHandler;
+	private FrameworkReportHandler frameworkReportHandler;
+	private static InheritableThreadLocal<ExtentTest> extentTest = new InheritableThreadLocal<ExtentTest>();
+	private TestSuiteMetaDataHandler testSuiteMetaDataHandler;
 
 	@Test(enabled = true)
-	public void validateTheNavigationLinks(Method testMethod, ITestContext iTestContext) {
+	public void shouldValidateTheNavigationLinks(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");

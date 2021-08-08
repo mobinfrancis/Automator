@@ -7,9 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.log4j.Logger;
-import org.testng.annotations.Test;
-
-import com.automator.tests.ProductSearchTest;
 
 public class DatabaseUtility {
 

@@ -31,13 +31,12 @@ import com.aventstack.extentreports.ExtentTest;
 public class ProductSearchTest {
 
 	private static final Logger log = Logger.getLogger(ProductSearchTest.class);
-
-	public FrameworkReportHandler frameworkReportHandler;
-	public static InheritableThreadLocal<ExtentTest> extentTest = new InheritableThreadLocal<ExtentTest>();
-	public TestSuiteMetaDataHandler testSuiteMetaDataHandler;
+	private FrameworkReportHandler frameworkReportHandler;
+	private static InheritableThreadLocal<ExtentTest> extentTest = new InheritableThreadLocal<ExtentTest>();
+	private TestSuiteMetaDataHandler testSuiteMetaDataHandler;
 
 	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class, enabled = true)
-	public void validateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
+	public void shouldValidateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
@@ -78,7 +77,7 @@ public class ProductSearchTest {
 	}
 
 	@Test(enabled = true)
-	public void validateProductSearchForProductsInDB(Method testMethod, ITestContext iTestContext) {
+	public void shouldValidateProductSearchForProductsInDB(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
