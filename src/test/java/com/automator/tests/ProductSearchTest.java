@@ -17,14 +17,13 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.automator.businessLayer.opencart.ProductSearch;
-import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
 import com.automator.handlers.dataHandler.TestSuiteMetaDataHandler;
 import com.automator.handlers.exceptionHandler.FrameworkException;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
 import com.automator.handlers.reportHandler.FrameworkReportHandler;
 import com.automator.handlers.reportHandler.TestCaseExecutionStatus;
-import com.automator.utilities.DataProviderSource;
+import com.automator.utilities.ProductSearchDataProviderSource;
 import com.automator.utilities.DatabaseUtility;
 import com.aventstack.extentreports.ExtentTest;
 
@@ -35,23 +34,16 @@ public class ProductSearchTest {
 	private static InheritableThreadLocal<ExtentTest> extentTest = new InheritableThreadLocal<ExtentTest>();
 	private TestSuiteMetaDataHandler testSuiteMetaDataHandler;
 
-	@Test(dataProvider = "productsToSearch", dataProviderClass = DataProviderSource.class, enabled = true)
+	@Test(dataProvider = "productsToSearch", dataProviderClass = ProductSearchDataProviderSource.class, enabled = true)
 	public void shouldValidateProductSearch(Method testMethod, ITestContext iTestContext, String productToSearch) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
-		ConfigController configController = new ConfigController();
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
-		String url = null;
-		if (configController.doesSystemPropertyConfigExistFor("ProductSearchTestPropertyFile")) {
-			url = propertyFileHandler.getDataFromPropertiesFile("url",
-					System.getProperty("ProductSearchTestPropertyFile"));
-		} else {
-			String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
-					+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
-			url = propertyFileHandler.getDataFromPropertiesFile("url",
-					configFileRootPath + "ProductSearchTest.properties");
-		}
+		String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
+				+ File.separator + "resources" + File.separator + "configs" + File.separator;
+		String url = propertyFileHandler.getDataFromPropertiesFile("url",
+				configFileRootPath + "ProductSearchTest.properties");
 		ExcelFileHandler excelFileHandler = new ExcelFileHandler();
 		excelFileHandler.loadExcelForTheTest("./src/test/resources/data/OpenCartData.xlsx", "DataSheet1",
 				testMethodName);
@@ -81,18 +73,11 @@ public class ProductSearchTest {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
-		ConfigController configController = new ConfigController();
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
-		String url = null;
-		if (configController.doesSystemPropertyConfigExistFor("ProductSearchTestPropertyFile")) {
-			url = propertyFileHandler.getDataFromPropertiesFile("url",
-					System.getProperty("ProductSearchTestPropertyFile"));
-		} else {
-			String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
-					+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
-			url = propertyFileHandler.getDataFromPropertiesFile("url",
-					configFileRootPath + "ProductSearchTest.properties");
-		}
+		String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
+				+ File.separator + "resources" + File.separator + "configs" + File.separator;
+		String url = propertyFileHandler.getDataFromPropertiesFile("url",
+				configFileRootPath + "ProductSearchTest.properties");
 		extentTest.set(frameworkReportHandler.getExtentReports().createTest(testMethodName));
 		ProductSearch productSearch = new ProductSearch();
 		productSearch.visit(url);

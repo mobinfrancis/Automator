@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import org.testng.annotations.DataProvider;
 
-public class DataProviderSource {
+public class ProductSearchDataProviderSource {
 
 	@DataProvider(name = "productsToSearch")
 	public static Object[][] getProductsToSearch() {

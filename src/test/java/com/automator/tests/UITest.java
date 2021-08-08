@@ -15,7 +15,6 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.automator.businessLayer.opencart.ItemsFunctionality;
-import com.automator.controllers.ConfigController;
 import com.automator.handlers.dataHandler.ExcelFileHandler;
 import com.automator.handlers.dataHandler.TestSuiteMetaDataHandler;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
@@ -35,18 +34,11 @@ public class UITest {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		log.info("=============== Initiating Test method: " + testMethodName + " ===============");
-		ConfigController configController = new ConfigController();
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
-		String url = null;
-		if (configController.doesSystemPropertyConfigExistFor("ProductSearchTestPropertyFile")) {
-			url = propertyFileHandler.getDataFromPropertiesFile("url",
-					System.getProperty("ProductSearchTestPropertyFile"));
-		} else {
-			String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
-					+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
-			url = propertyFileHandler.getDataFromPropertiesFile("url",
-					configFileRootPath + "ProductSearchTest.properties");
-		}
+		String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
+				+ File.separator + "resources" + File.separator + "configs" + File.separator;
+		String url = propertyFileHandler.getDataFromPropertiesFile("url",
+				configFileRootPath + "ProductSearchTest.properties");
 		ExcelFileHandler excelFileHandler = new ExcelFileHandler();
 		excelFileHandler.loadExcelForTheTest("./src/test/resources/data/OpenCartData.xlsx", "DataSheet1",
 				testMethodName);
