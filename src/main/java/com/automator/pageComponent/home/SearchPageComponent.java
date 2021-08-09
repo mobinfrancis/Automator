@@ -7,9 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 import com.automator.actions.webActions.WebDriverAction;
 
-public class SearchPageComponent extends WebDriverAction {
+public class SearchPageComponent {
 
 	private final WebDriver driver;
+	private WebDriverAction action;
 	private static final Logger log = Logger.getLogger(SearchPageComponent.class);
 	private final By searchTextBox = By.xpath("//input[@type='text'][@name='search']");
 	private final By searchIconButton = By.xpath("//button/i[@class='fa fa-search']");
@@ -24,73 +25,74 @@ public class SearchPageComponent extends WebDriverAction {
 
 	public SearchPageComponent(WebDriver driver) {
 		this.driver = driver;
+		action = new WebDriverAction();
 	}
 
 	public SearchPageComponent enterTextInSearchTextBox(String textToEnter) {
-		getWebElement(driver, searchTextBox).sendKeys(textToEnter);
+		action.getWebElement(driver, searchTextBox).sendKeys(textToEnter);
 		log.info("Entered text in the Search Text Box: " + textToEnter);
 		Reporter.log("Entered text in the Search Text Box: " + textToEnter);
 		return this;
 	}
 
 	public SearchPageComponent clearTextInSearchTextBox() {
-		getWebElement(driver, searchTextBox).clear();
+		action.getWebElement(driver, searchTextBox).clear();
 		log.info("Cleared text in the Search Text Box");
 		Reporter.log("Cleared text in the Search Text Box");
 		return this;
 	}
 
 	public SearchPageComponent clickOnSearchIconButton() {
-		getWebElement(driver, searchIconButton).click();
+		action.getWebElement(driver, searchIconButton).click();
 		log.info("Clicked on the Search Icon Button");
 		Reporter.log("Clicked on the Search Icon Button");
 		return this;
 	}
 
 	public WebElement getSearchContentHeading() {
-		return getWebElement(driver, searchContentHeading);
+		return action.getWebElement(driver, searchContentHeading);
 	}
 
 	public WebElement getSearchContentSubheading() {
-		return getWebElement(driver, searchContentSubheading);
+		return action.getWebElement(driver, searchContentSubheading);
 	}
 
 	public SearchPageComponent enterTextInSearchCriteriaTextBox(String textToEnter) {
-		getWebElement(driver, searchCriteriaTextBox).sendKeys(textToEnter);
+		action.getWebElement(driver, searchCriteriaTextBox).sendKeys(textToEnter);
 		log.info("Entered text in the Search Criteria Text Box: " + textToEnter);
 		Reporter.log("Entered text in the Search Criteria Text Box: " + textToEnter);
 		return this;
 	}
 
 	public WebElement getSearchCriteriaTextBox() {
-		return getWebElement(driver, searchCriteriaTextBox);
+		return action.getWebElement(driver, searchCriteriaTextBox);
 	}
 
 	public SearchPageComponent clickOnSearchButton() {
-		getWebElement(driver, searchButton).click();
+		action.getWebElement(driver, searchButton).click();
 		log.info("Clicked on the Search Button");
 		Reporter.log("Clicked on the Search Button");
 		return this;
 	}
 
 	public WebElement getSearchButton() {
-		return getWebElement(driver, searchButton);
+		return action.getWebElement(driver, searchButton);
 	}
 
 	public WebElement getIPhoneImage() {
-		return getWebElement(driver, iPhoneImage);
+		return action.getWebElement(driver, iPhoneImage);
 	}
 
 	public WebElement getIPhoneImageCaption() {
-		return getWebElement(driver, iPhoneImageCaption);
+		return action.getWebElement(driver, iPhoneImageCaption);
 	}
 
 	public WebElement getIPhoneImageText() {
-		return getWebElement(driver, iPhoneImageText);
+		return action.getWebElement(driver, iPhoneImageText);
 	}
 
 	public WebElement getIPhoneImagePrice() {
-		return getWebElement(driver, iPhoneImagePrice);
+		return action.getWebElement(driver, iPhoneImagePrice);
 	}
 
 }

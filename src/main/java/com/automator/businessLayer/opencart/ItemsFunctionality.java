@@ -39,6 +39,8 @@ public class ItemsFunctionality extends BaseFunctionality {
 		case "MP3Players":
 			Assert.assertTrue(this.itemPageComponent.getMP3PlayersNavbar().isEnabled());
 			break;
+		default:
+			throw new IllegalArgumentException("Incorrect Navbar item: " + navbarItemName);
 		}
 
 	}

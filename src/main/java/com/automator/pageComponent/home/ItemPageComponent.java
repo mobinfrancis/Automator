@@ -1,15 +1,19 @@
 package com.automator.pageComponent.home;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Reporter;
+
 import com.automator.actions.webActions.WebDriverAction;
 
-public class ItemPageComponent extends WebDriverAction {
+public class ItemPageComponent{
 
 	private final WebDriver driver;
+	private WebDriverAction action;
 	private static final Logger log = Logger.getLogger(ItemPageComponent.class);
 	private final By desktopsNavbar = By.xpath("//ul[@class='nav navbar-nav']/li/a[text()='Desktops']");
 	private final By laptopsAndNotebooksNavbar = By
@@ -23,38 +27,40 @@ public class ItemPageComponent extends WebDriverAction {
 
 	public ItemPageComponent(WebDriver driver) {
 		this.driver = driver;
+		action = new WebDriverAction();
 	}
 
 	public WebElement getDesktopsNavbar() {
-		return getWebElement(driver, desktopsNavbar);
+		return action.getWebElement(driver, desktopsNavbar);
 	}
 
 	public WebElement getLaptopsAndNotebooksNavbar() {
-		return getWebElement(driver, laptopsAndNotebooksNavbar);
+		return action.getWebElement(driver, laptopsAndNotebooksNavbar);
 	}
 
 	public WebElement getComponentsNavbar() {
-		return getWebElement(driver, componentsNavbar);
+		return action.getWebElement(driver, componentsNavbar);
 	}
 
 	public WebElement getTabletsNavbar() {
-		return getWebElement(driver, tabletsNavbar);
+		return action.getWebElement(driver, tabletsNavbar);
 	}
 
 	public WebElement getSoftwareNavbar() {
-		return getWebElement(driver, softwareNavbar);
+		return action.getWebElement(driver, softwareNavbar);
 	}
 
 	public WebElement getPhonesAndPDAsNavbar() {
-		return getWebElement(driver, phonesAndPDAsNavbar);
+		return action.getWebElement(driver, phonesAndPDAsNavbar);
 	}
 
 	public WebElement getCamerasNavbar() {
-		return getWebElement(driver, camerasNavbar);
+		return action.getWebElement(driver, camerasNavbar);
 	}
 
 	public WebElement getMP3PlayersNavbar() {
-		return getWebElement(driver, mp3PlayersNavbar);
+		return action.getWebElement(driver, mp3PlayersNavbar);
 	}
-
+	
 }
+
