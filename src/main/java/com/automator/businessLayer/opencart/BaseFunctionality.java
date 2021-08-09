@@ -1,6 +1,5 @@
 package com.automator.businessLayer.opencart;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 import com.automator.controllers.WebDriverController;
@@ -11,7 +10,6 @@ public class BaseFunctionality {
 	public WebDriver driver;
 	public PageHandler pageHandler;
 	public WebDriverController webDriverController;
-	private static final Logger log = Logger.getLogger(BaseFunctionality.class);
 
 	public WebDriver getDriver() {
 		return this.driver;
@@ -32,7 +30,6 @@ public class BaseFunctionality {
 	public void end() {
 		if (this.driver != null) {
 			this.driver.quit();
-			log.info("WebDriver session ended and browser(s) exited");
 		}
 	}
 

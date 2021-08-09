@@ -43,15 +43,11 @@ public class ProductSearchTest {
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
 		String url = propertyFileHandler.getDataFromPropertiesFile("url",
 				configFileRootPath + "ProductSearchTest.properties");
-		ProductSearch productSearch = new ProductSearch();
+		ProductSearch productSearch = new ProductSearch(frameworkReportHandler, extentTest.get(), testSuiteName,
+				testMethodName);
 		productSearch.visit(url);
-		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
-				extentTest.get(), productSearch.getDriver(), testSuiteName, testMethodName);
 		log.info("Product being searched is: " + productToSearch);
 		productSearch.searchProduct(productToSearch);
-		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info",
-				"Searched the product: " + productToSearch, extentTest.get(), productSearch.getDriver(), testSuiteName,
-				testMethodName);
 		productSearch.validateTheSearchedProductHeading();
 		productSearch.validateTheSearchedProductSubheading();
 		productSearch.validateTheTextPresentInSearchCriteriaTextBox();
@@ -67,10 +63,9 @@ public class ProductSearchTest {
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
 		String url = propertyFileHandler.getDataFromPropertiesFile("url",
 				configFileRootPath + "ProductSearchTest.properties");
-		ProductSearch productSearch = new ProductSearch();
+		ProductSearch productSearch = new ProductSearch(frameworkReportHandler, extentTest.get(), testSuiteName,
+				testMethodName);
 		productSearch.visit(url);
-		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
-				extentTest.get(), productSearch.getDriver(), testSuiteName, testMethodName);
 		DatabaseUtility databaseUtility = new DatabaseUtility();
 		ResultSet resultSet = databaseUtility.getDataFromMySQLDB("select * from products;");
 		try {
@@ -78,9 +73,6 @@ public class ProductSearchTest {
 				String productToSearch = resultSet.getString("product_name");
 				log.info("Product being searched is: " + resultSet.getString("product_name"));
 				productSearch.searchProduct(productToSearch);
-				frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info",
-						"Searched the product: " + productToSearch, extentTest.get(), productSearch.getDriver(),
-						testSuiteName, testMethodName);
 				productSearch.validateTheSearchedProductHeading();
 				productSearch.validateTheSearchedProductSubheading();
 				productSearch.validateTheTextPresentInSearchCriteriaTextBox();

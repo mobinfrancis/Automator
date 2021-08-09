@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -14,7 +13,6 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
 import com.automator.businessLayer.opencart.ItemsFunctionality;
 import com.automator.handlers.dataHandler.TestSuiteMetaDataHandler;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
@@ -38,10 +36,9 @@ public class UITest {
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
 		String url = propertyFileHandler.getDataFromPropertiesFile("url",
 				configFileRootPath + "ProductSearchTest.properties");
-		ItemsFunctionality itemsFunctionality = new ItemsFunctionality();
+		ItemsFunctionality itemsFunctionality = new ItemsFunctionality(frameworkReportHandler, extentTest.get(),
+				testSuiteName, testMethodName);
 		itemsFunctionality.visit(url);
-		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
-				extentTest.get(), itemsFunctionality.getDriver(), testSuiteName, testMethodName);
 		String[] searchItems = { "Desktops", "Laptops & Notebooks", "Components", "Tablets", "Software",
 				"Phones & PDAs", "Cameras", "MP3 Players" };
 		for (String searchItem : searchItems) {
