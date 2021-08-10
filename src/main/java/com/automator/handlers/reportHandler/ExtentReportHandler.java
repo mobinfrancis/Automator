@@ -17,6 +17,7 @@ public class ExtentReportHandler {
 		extentHtmlReporter.config().setReportName("AUTOMATOR Extent Report");
 		extentHtmlReporter.config().setTheme(Theme.DARK);
 		extentHtmlReporter.config().setTimeStampFormat("dd-MMM-yyyy_hh-mm-ss_aa");
+		extentHtmlReporter.config().setCSS(".r-img {width: 40%; height: 40%}");
 		return extentHtmlReporter;
 	}
 
