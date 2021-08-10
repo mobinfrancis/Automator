@@ -1,5 +1,7 @@
 package com.automator.controllers;
 
+import java.awt.DisplayMode;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 
 import org.apache.log4j.Logger;
@@ -14,9 +16,9 @@ public class BrowserController {
 
 	private ConfigController configController;
 	private static final Logger log = Logger.getLogger(BrowserController.class);
+	private static String driverPath = System.getProperty("user.dir") + File.separator + "drivers" + File.separator;
 
 	public WebDriver chromeSetUp(WebDriver driver) {
-		String driverPath = System.getProperty("user.dir") + File.separator + "drivers" + File.separator;
 		String chromeDriverName = "chromedriver.exe";
 		configController = new ConfigController();
 		if (configController.doesSystemPropertyConfigExistFor("DRIVER_LOCATION")) {
@@ -29,21 +31,25 @@ public class BrowserController {
 		}
 		log.info("Chromedriver path: " + driverPath + chromeDriverName);
 		System.setProperty("webdriver.chrome.driver", driverPath + chromeDriverName);
+		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDisplayMode();
+		int screen_width = (int) displayMode.getWidth();
+		int screen_height = (int) displayMode.getHeight();
+		log.info("Desktop Screen Resolution: " + screen_width + "/" + screen_height);
 		driver = new ChromeDriver(getChromeOptions());
+		log.info("Running Chrome Browser Dimension: " + driver.manage().window().getSize());
 		return driver;
 	}
 
 	public WebDriver firefoxSetUp(WebDriver driver) {
-		System.setProperty("webdriver.gecko.driver",
-				System.getProperty("user.dir") + File.separator + "drivers" + File.separator + "geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", driverPath + "geckodriver.exe");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		return driver;
 	}
 
 	public WebDriver edgeSetUp(WebDriver driver) {
-		System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") + File.separator + "drivers"
-				+ File.separator + "MicrosoftWebDriver.exe");
+		System.setProperty("webdriver.edge.driver", driverPath + "MicrosoftWebDriver.exe");
 		driver = new InternetExplorerDriver();
 		driver.manage().window().maximize();
 		return driver;
@@ -59,6 +65,16 @@ public class BrowserController {
 		ChromeOptions chromeOptions = null;
 		chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--start-maximized");
+		if (configController.doesSystemPropertyConfigExistFor("incognito")) {
+			if (System.getProperty("incognito").equals("true")) {
+				chromeOptions.addArguments("--incognito");
+			}
+		}
+		if (configController.doesSystemPropertyConfigExistFor("headless")) {
+			if (System.getProperty("headless").equals("true")) {
+				chromeOptions.addArguments("--headless");
+			}
+		}
 		return chromeOptions;
 	}
 
