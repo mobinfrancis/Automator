@@ -13,6 +13,7 @@ public class ProductSearch extends BaseFunctionality {
 	private ExtentTest extentTest;
 	private String testSuiteName;
 	private String testMethodName;
+	private String browserName;
 	private SearchPageComponent searchPageComponent;
 	private static final Logger log = Logger.getLogger(ProductSearch.class);
 	private String searchedProductName;
@@ -26,10 +27,18 @@ public class ProductSearch extends BaseFunctionality {
 	}
 
 	@Override
+	public void launch(String browser) {
+		super.launch(browser);
+		this.browserName = browser;
+
+	}
+
+	@Override
 	public void visit(String url) {
 		super.visit(url);
-		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
-				this.extentTest, getDriver(), testSuiteName, testMethodName);
+		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info",
+				"Visited the url: " + url + " , on browser: " + this.browserName, this.extentTest, getDriver(),
+				testSuiteName, testMethodName);
 	}
 
 	@Override

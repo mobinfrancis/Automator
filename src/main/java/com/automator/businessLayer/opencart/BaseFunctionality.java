@@ -15,14 +15,17 @@ public class BaseFunctionality {
 		return this.driver;
 	}
 
-	private WebDriver initializeAndGetDriver() {
-		this.webDriverController = new WebDriverController();
+	private WebDriver launchBrowserAndGetDriver(String browser) {
+		this.webDriverController = new WebDriverController(browser);
 		this.driver = this.webDriverController.getDriver();
 		return driver;
 	}
+	
+	public void launch(String browser) {
+		this.driver = launchBrowserAndGetDriver(browser);		
+	}
 
 	public void visit(String url) {
-		this.driver = initializeAndGetDriver();
 		this.pageHandler = new PageHandler(driver);
 		this.driver = this.pageHandler.goToURL(url);
 	}

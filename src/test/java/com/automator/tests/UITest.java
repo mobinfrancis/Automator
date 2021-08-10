@@ -38,6 +38,7 @@ public class UITest {
 				configFileRootPath + "ProductSearchTest.properties");
 		ItemsFunctionality itemsFunctionality = new ItemsFunctionality(frameworkReportHandler, extentTest.get(),
 				testSuiteName, testMethodName);
+		itemsFunctionality.launch("Firefox");
 		itemsFunctionality.visit(url);
 		String[] searchItems = { "Desktops", "Laptops & Notebooks", "Components", "Tablets", "Software",
 				"Phones & PDAs", "Cameras", "MP3 Players" };

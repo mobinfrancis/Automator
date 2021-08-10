@@ -37,6 +37,7 @@ public class BrowserController {
 		System.setProperty("webdriver.gecko.driver",
 				System.getProperty("user.dir") + File.separator + "drivers" + File.separator + "geckodriver.exe");
 		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		return driver;
 	}
 
@@ -44,11 +45,13 @@ public class BrowserController {
 		System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") + File.separator + "drivers"
 				+ File.separator + "MicrosoftWebDriver.exe");
 		driver = new InternetExplorerDriver();
+		driver.manage().window().maximize();
 		return driver;
 	}
 
 	public WebDriver safariSetUp(WebDriver driver) {
 		driver = new SafariDriver();
+		driver.manage().window().maximize();
 		return driver;
 	}
 

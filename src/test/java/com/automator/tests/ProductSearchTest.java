@@ -45,6 +45,7 @@ public class ProductSearchTest {
 				configFileRootPath + "ProductSearchTest.properties");
 		ProductSearch productSearch = new ProductSearch(frameworkReportHandler, extentTest.get(), testSuiteName,
 				testMethodName);
+		productSearch.launch("Firefox");
 		productSearch.visit(url);
 		log.info("Product being searched is: " + productToSearch);
 		productSearch.searchProduct(productToSearch);
@@ -65,6 +66,7 @@ public class ProductSearchTest {
 				configFileRootPath + "ProductSearchTest.properties");
 		ProductSearch productSearch = new ProductSearch(frameworkReportHandler, extentTest.get(), testSuiteName,
 				testMethodName);
+		productSearch.launch("Chrome");
 		productSearch.visit(url);
 		DatabaseUtility databaseUtility = new DatabaseUtility();
 		ResultSet resultSet = databaseUtility.getDataFromMySQLDB("select * from products;");

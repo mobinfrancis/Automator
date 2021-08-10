@@ -13,6 +13,7 @@ public class ItemsFunctionality extends BaseFunctionality {
 	private ExtentTest extentTest;
 	private String testSuiteName;
 	private String testMethodName;
+	private String browserName;
 	private ItemPageComponent itemPageComponent;
 	private static final Logger log = Logger.getLogger(ItemsFunctionality.class);
 	private String navbarItemName;
@@ -26,10 +27,18 @@ public class ItemsFunctionality extends BaseFunctionality {
 	}
 
 	@Override
+	public void launch(String browser) {
+		super.launch(browser);
+		this.browserName = browser;
+
+	}
+
+	@Override
 	public void visit(String url) {
 		super.visit(url);
-		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info", "Visited the url: " + url,
-				this.extentTest, getDriver(), testSuiteName, testMethodName);
+		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("info",
+				"Visited the url: " + url + " , on browser: " + this.browserName, this.extentTest, getDriver(),
+				testSuiteName, testMethodName);
 	}
 
 	@Override
@@ -71,8 +80,8 @@ public class ItemsFunctionality extends BaseFunctionality {
 		}
 		log.info("Navbar item - " + navbarItem + " - is present and enabled");
 		frameworkReportHandler.captureAndAttachScreenshotForExtentReport("pass",
-				"Navbar item - " + navbarItem + " - is present and enabled", this.extentTest, getDriver(), testSuiteName,
-				testMethodName);
+				"Navbar item - " + navbarItem + " - is present and enabled", this.extentTest, getDriver(),
+				testSuiteName, testMethodName);
 	}
 
 }
