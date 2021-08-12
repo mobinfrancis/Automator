@@ -1,14 +1,15 @@
 package com.automator.controllers;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import com.automator.handlers.exceptionHandler.FrameworkException;
 import com.automator.utilities.DateTimeUtility;
-
 
 public class ScreenshotController {
 
@@ -31,8 +32,8 @@ public class ScreenshotController {
 		}
 		try {
 			FileUtils.copyFile(screenshotFile, destinationFile);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			throw new FrameworkException("Not able to copy screenshot file from source to destination", e);
 		}
 		return screenshotFilePath;
 	}

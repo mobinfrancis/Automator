@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 
 public class BrowserController {
@@ -51,7 +52,7 @@ public class BrowserController {
 		log.info("Geckodriver path: " + driverPath + firefoxDriverName);
 		System.setProperty("webdriver.gecko.driver", driverPath + firefoxDriverName);
 		displayDesktopScreenResolution();
-		driver = new FirefoxDriver();
+		driver = new FirefoxDriver(getFirefoxOptions());
 		driver.manage().window().maximize();
 		displayBrowserDimension(driver, "Firefox");
 		return driver;
@@ -101,6 +102,22 @@ public class BrowserController {
 		return chromeOptions;
 	}
 
+	public FirefoxOptions getFirefoxOptions() {
+		FirefoxOptions firefoxOptions = null;
+		firefoxOptions = new FirefoxOptions();
+		if (configController.doesSystemPropertyConfigExistFor("incognito")) {
+			if (System.getProperty("incognito").equals("true")) {
+				firefoxOptions.addArguments("-private");
+			}
+		}
+		if (configController.doesSystemPropertyConfigExistFor("headless")) {
+			if (System.getProperty("headless").equals("true")) {
+				firefoxOptions.setHeadless(true);
+			}
+		}
+		return firefoxOptions;
+	}
+
 	public void displayDesktopScreenResolution() {
 		DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDisplayMode();
@@ -110,7 +127,7 @@ public class BrowserController {
 	}
 
 	public void displayBrowserDimension(WebDriver driver, String browser) {
-		log.info("Running " + browser +" Browser Dimension: " + driver.manage().window().getSize());
+		log.info("Running " + browser + " Browser Dimension: " + driver.manage().window().getSize());
 	}
 
 }
