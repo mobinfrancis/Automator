@@ -59,6 +59,7 @@ public class BrowserController {
 		}
 		log.info("Geckodriver path: " + driverPath + firefoxDriverName);
 		System.setProperty("webdriver.gecko.driver", driverPath + firefoxDriverName);
+		System.setProperty("webdriver.firefox.logfile", "./logs/FirefoxBrowserLog.log");
 		displayDesktopScreenResolution();
 		driver = new FirefoxDriver(getFirefoxOptions());
 		driver.manage().window().maximize();
