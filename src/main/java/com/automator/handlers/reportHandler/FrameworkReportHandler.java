@@ -130,12 +130,12 @@ public class FrameworkReportHandler {
 	public void initiateExcelReportFormatter(String testSuiteName) {
 		excelReportHandler = new ExcelReportHandler();
 		setExcelReportParentFolderPath(parentReportsFolderPath);
-		String excelReportsFolderPath = parentReportsFolderPath + "Excel Results";
+		String excelReportsFolderPath = parentReportsFolderPath + "Excel_Reports";
 		File excelReportsFolderDirectory = new File(excelReportsFolderPath);
 		if (!excelReportsFolderDirectory.exists()) {
 			excelReportsFolderDirectory.mkdirs();
 		}
-		testSuiteExcelReportFilePath = excelReportsFolderPath + File.separator + testSuiteName + "_Instance1.xls";
+		testSuiteExcelReportFilePath = excelReportsFolderPath + File.separator + testSuiteName + ".xls";
 		excelReportHandler.createTestSuiteExcelReport(testSuiteExcelReportFilePath, testSuiteName);
 	}
 
