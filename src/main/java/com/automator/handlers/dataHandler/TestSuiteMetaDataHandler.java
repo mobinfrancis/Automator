@@ -14,18 +14,18 @@ public class TestSuiteMetaDataHandler {
 
 	public TestSuiteMetaDataHandler(String testSuiteName) {
 		this.testSuiteName = testSuiteName;
-		testSuiteMetaDataMap = new HashMap<String, ArrayList<String>>();
+		this.testSuiteMetaDataMap = new HashMap<String, ArrayList<String>>();
 	}
 
-	public synchronized void insertDataIntoTestSuiteMetaData(String testCaseName, ArrayList<String> testMetaData) {
-		testSuiteMetaDataMap.put(testCaseName, testMetaData);
+	public synchronized void insertDataIntoTestSuiteMetaData(String testCaseName, ArrayList<String> testCaseMetaData) {
+		this.testSuiteMetaDataMap.put(testCaseName, testCaseMetaData);
 	}
 
-	public void insertTestSuiteStartTime(long startTime) {
+	public void setTestSuiteStartTime(long startTime) {
 		this.testSuiteExecutionStartTime = startTime;
 	}
 
-	public void insertTestSuiteEndTime(long endTime) {
+	public void setTestSuiteEndTime(long endTime) {
 		this.testSuiteExecutionEndTime = endTime;
 	}
 
@@ -33,12 +33,11 @@ public class TestSuiteMetaDataHandler {
 		long executionTimeInLong = this.testSuiteExecutionEndTime - this.testSuiteExecutionStartTime;
 		long minutes = (executionTimeInLong / 1000) / 60;
 		long seconds = (executionTimeInLong / 1000) % 60;
-		String executionTime = minutes + " minute(s), " + seconds + " second(s)";
-		testSuiteExecutionTime = executionTime;
+		this.testSuiteExecutionTime = minutes + " minute(s), " + seconds + " second(s)";
 	}
 
 	public Map<String, ArrayList<String>> getTestSuiteMetaData() {
-		return testSuiteMetaDataMap;
+		return this.testSuiteMetaDataMap;
 	}
 
 	public String getTestSuiteExecutionTime() {

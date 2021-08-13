@@ -94,7 +94,7 @@ public class ProductSearchTest {
 		String testSuiteName = iTestContext.getSuite().getName();
 		log.info("=============== Initiating Test Suite: " + testSuiteName + " ===============");
 		testSuiteMetaDataHandler = new TestSuiteMetaDataHandler(testSuiteName);
-		testSuiteMetaDataHandler.insertTestSuiteStartTime(System.currentTimeMillis());
+		testSuiteMetaDataHandler.setTestSuiteStartTime(System.currentTimeMillis());
 		frameworkReportHandler = new FrameworkReportHandler();
 		frameworkReportHandler.initiateExtentReportFormatter(testSuiteName);
 		frameworkReportHandler.initiateExcelReportFormatter(testSuiteName);
@@ -133,7 +133,7 @@ public class ProductSearchTest {
 
 	@AfterSuite
 	public void testSuiteTeardown(ITestContext testSuiteName) {
-		testSuiteMetaDataHandler.insertTestSuiteEndTime(System.currentTimeMillis());
+		testSuiteMetaDataHandler.setTestSuiteEndTime(System.currentTimeMillis());
 		testSuiteMetaDataHandler.calculateAndSetTestSuiteExecutionTime();
 		frameworkReportHandler.flushExtentReport();
 		frameworkReportHandler.flushExcelReport(testSuiteMetaDataHandler.getTestSuiteMetaData(),
