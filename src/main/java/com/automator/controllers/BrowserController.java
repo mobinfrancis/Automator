@@ -13,6 +13,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 
+/**
+ * This class helps to set up the configuration for all the browser(s) which
+ * will be running the tests and also launch the browser(s) with the
+ * configuration.
+ * 
+ * @author Sumon Dey
+ *
+ */
 public class BrowserController {
 
 	private ConfigController configController;

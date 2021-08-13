@@ -15,6 +15,17 @@ import org.testng.xml.XmlTest;
 import com.automator.handlers.exceptionHandler.FrameworkException;
 import com.automator.handlers.fileHandler.PropertyFileHandler;
 
+/**
+ * This class is the entry point for running tests using the Automator
+ * framework. Users can create testng.xml file at runtime from this class and
+ * then use the generated xml file to drive the tests. Users can define all the
+ * items needed in the testng.xml file from here (e.g. test suite name, test
+ * name, parameters, class names, parallel mode, thread count) and they will get
+ * dynamically added to the file at runtime.
+ * 
+ * @author Sumon Dey
+ *
+ */
 public class DynamicTestNGGenerator {
 
 	private static final Logger log = Logger.getLogger(DynamicTestNGGenerator.class);

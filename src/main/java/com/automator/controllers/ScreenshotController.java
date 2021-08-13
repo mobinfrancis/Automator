@@ -11,6 +11,13 @@ import org.openqa.selenium.WebDriver;
 import com.automator.handlers.exceptionHandler.FrameworkException;
 import com.automator.utilities.DateTimeUtility;
 
+/**
+ * This class helps to capture screenshots for the tests at runtime and store
+ * them.
+ * 
+ * @author Sumon Dey
+ *
+ */
 public class ScreenshotController {
 
 	private File destinationFile;
