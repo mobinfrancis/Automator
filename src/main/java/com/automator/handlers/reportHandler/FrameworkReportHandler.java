@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 
 import com.automator.controllers.ScreenshotController;
+import com.automator.handlers.exceptionHandler.FrameworkException;
 import com.automator.utilities.DateTimeUtility;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -53,7 +54,7 @@ public class FrameworkReportHandler {
 			parentReportsFolderPath = System.getProperty("user.dir") + File.separator + "reports" + File.separator
 					+ "Run_" + DateTimeUtility.getFormattedCurrentDateTime("dd-MMM-yyyy_hh-mm-ss_aa") + File.separator;
 			setExtentReportParentFolderPath(parentReportsFolderPath);
-			String extentReportsFolderPath = parentReportsFolderPath + "HTML Results";
+			String extentReportsFolderPath = parentReportsFolderPath + "HTML_Reports";
 			String extentReportsFilePath = extentReportsFolderPath + File.separator + testSuiteName + ".html";
 			File extentReportFile = new File(extentReportsFilePath);
 			ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(extentReportFile);
@@ -63,7 +64,7 @@ public class FrameworkReportHandler {
 			extentReports.attachReporter(extentHtmlReporter);
 			extentReports = extentReportHandler.setSystemInfoInExtentReports(extentReports, testSuiteName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new FrameworkException("Not able to initiate the generation of ExtentReport", e);
 		}
 	}
 

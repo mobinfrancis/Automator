@@ -14,7 +14,7 @@ public class ExtentReportHandler {
 
 	public ExtentHtmlReporter configureExtentHtmlReporter(ExtentHtmlReporter extentHtmlReporter) {
 		extentHtmlReporter.config().setDocumentTitle("AUTOMATOR");
-		extentHtmlReporter.config().setReportName("AUTOMATOR Extent Report");
+		extentHtmlReporter.config().setReportName("AUTOMATOR ExtentReport");
 		extentHtmlReporter.config().setTheme(Theme.DARK);
 		extentHtmlReporter.config().setTimeStampFormat("dd-MMM-yyyy_hh-mm-ss_aa");
 		extentHtmlReporter.config().setCSS(".r-img {width: 40%; height: 40%}");
@@ -22,8 +22,7 @@ public class ExtentReportHandler {
 	}
 
 	public ExtentReports setSystemInfoInExtentReports(ExtentReports extentReports, String testSuiteName) {
-		extentReports.setSystemInfo("Name", testSuiteName);
-		extentReports.setSystemInfo("Browser", "Chrome");
+		extentReports.setSystemInfo("Test Suite", testSuiteName);
 		extentReports.setSystemInfo("Environment", "Test");
 		return extentReports;
 	}

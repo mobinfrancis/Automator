@@ -3,6 +3,7 @@
 <suite name="MainTestSuite">
 	<suite-files>
 		<suite-file path="functionalTestSuite1.xml" />
+		<suite-file path="functionalTestSuite2.xml" />
 	</suite-files>
 </suite>
 

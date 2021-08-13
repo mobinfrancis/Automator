@@ -3,10 +3,14 @@ package com.automator.controllers;
 import java.awt.DisplayMode;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeDriverService.Builder;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -41,7 +45,14 @@ public class BrowserController {
 		log.info("Chromedriver path: " + driverPath + chromeDriverName);
 		System.setProperty("webdriver.chrome.driver", driverPath + chromeDriverName);
 		displayDesktopScreenResolution();
-		driver = new ChromeDriver(getChromeOptions());
+		Builder serviceBuilder = new ChromeDriverService.Builder();
+		ChromeDriverService chromeDriverService = (ChromeDriverService) serviceBuilder.build();
+		try {
+			chromeDriverService.sendOutputTo(new FileOutputStream("./logs/ChromeBrowserLog.log"));
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException("Not able to send output to file", e);
+		}
+		driver = new ChromeDriver(chromeDriverService, getChromeOptions());
 		displayBrowserDimension(driver, "Chrome");
 		return driver;
 	}

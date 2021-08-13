@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="10" name="FunctionlTestSuite2" parallel="methods">
+<suite thread-count="10" name="FunctionalTestSuite2" parallel="methods">
   <test thread-count="10" name="IntegrationTest2" parallel="methods">
     <classes>
       <class name="com.automator.tests.ProductSearchTest"/>
       <class name="com.automator.tests.UITest"/>
     </classes>
   </test> <!-- IntegrationTest2 -->
-</suite> <!-- FunctionlTestSuite2 -->
+</suite> <!-- FunctionalTestSuite2 -->

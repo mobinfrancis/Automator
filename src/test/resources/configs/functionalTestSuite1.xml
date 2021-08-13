@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="FunctionlTestSuite1" parallel="methods">
+<suite name="FunctionalTestSuite1" parallel="methods">
 	<test name="IntegrationTest1">
 		<classes>
 			<class name="com.automator.tests.ProductSearchTest" />
