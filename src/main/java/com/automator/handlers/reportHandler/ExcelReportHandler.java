@@ -286,7 +286,7 @@ public class ExcelReportHandler {
 		headerRow_CellStyle_TestLog_Sheet.setFillForegroundColor(IndexedColors.BLACK.getIndex());
 		headerRow_CellStyle_TestLog_Sheet.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		// create the header row cells for the TestLog (second sheet)
-		String[] headerColumns_TestLog_Sheet = { "Step_No", "Step_Name", "Description", "Status", "Step_Time" };
+		String[] headerColumns_TestLog_Sheet = { "Test No.", "Test Name", "Test Description", "Test Execution Status", "Test Execution Time" };
 		for (int i = 0; i < headerColumns_TestLog_Sheet.length; i++) {
 			Cell cell = headerRow_TestLog_Sheet.createCell(i);
 			cell.setCellValue(headerColumns_TestLog_Sheet[i]);
@@ -380,10 +380,10 @@ public class ExcelReportHandler {
 					failCount += 1;
 				}
 			}
-			executionStatusCell1.setCellValue("Steps passed");
-			executionStatusCell2.setCellValue(": " + passCount);
-			executionStatusCell4.setCellValue("Steps failed");
-			executionStatusCell5.setCellValue(": " + failCount);
+			executionStatusCell1.setCellValue("No. of Tests Passed:");
+			executionStatusCell2.setCellValue(passCount);
+			executionStatusCell4.setCellValue("No. of Tests Failed:");
+			executionStatusCell5.setCellValue(failCount);
 			fileOutputStream = new FileOutputStream(excelReportFilePath);
 			workbook.write(fileOutputStream);
 		} catch (Exception e) {
