@@ -91,7 +91,7 @@ public class FrameworkReportHandler {
 				break;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new FrameworkException("Not able to capture and attach screenshot for ExtentReport", e);
 		}
 	}
 
@@ -111,7 +111,7 @@ public class FrameworkReportHandler {
 				this.extentTest.pass("Test Skipped");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new FrameworkException("Not able to append overall result to the ExtentReport for each test", e);
 		}
 	}
 
@@ -151,17 +151,6 @@ public class FrameworkReportHandler {
 
 	public String getExcelReportParentFolderPath() {
 		return this.parentReportsFolderPath;
-	}
-
-	public void initiateSummaryExcelReport() {
-		String excelReportsFolderPath = parentReportsFolderPathForSummaryReport + "Excel Results";
-		File excelReportsFolderDirectory = new File(excelReportsFolderPath);
-		if (!excelReportsFolderDirectory.exists()) {
-			excelReportsFolderDirectory.mkdirs();
-		}
-		testSuiteExcelReportFilePath = excelReportsFolderPath + File.separator + "Summary.xls";
-		ExcelReportHandler excelReportHandler = new ExcelReportHandler();
-		excelReportHandler.createSummaryExcelReport(testSuiteExcelReportFilePath);
 	}
 
 }

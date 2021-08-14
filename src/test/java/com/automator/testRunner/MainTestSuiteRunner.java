@@ -33,8 +33,6 @@ public class MainTestSuiteRunner {
 		long minutes = (totalExecutionTimeInLong / 1000) / 60;
 		long seconds = (totalExecutionTimeInLong / 1000) % 60;
 		totalExecutionTime = minutes + " minute(s), " + seconds + " second(s)";
-		FrameworkReportHandler frameworkReportHandler = new FrameworkReportHandler();
-		frameworkReportHandler.initiateSummaryExcelReport();
 	}
 
 }
