@@ -266,7 +266,7 @@ public class ExcelReportHandler {
 			try {
 				workbook.close();
 			} catch (IOException e) {
-				throw new FrameworkException("Not able to close Workbook", e);
+				throw new FrameworkException("Not able to close workbook", e);
 			}
 		}
 	}
@@ -274,7 +274,6 @@ public class ExcelReportHandler {
 	public Workbook createTestLogSheet(Workbook workbook, String testSuiteName) {
 		Sheet testLog_Sheet = workbook.createSheet("Test_Log");
 		testLog_Sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 4));
-		testLog_Sheet.addMergedRegion(new CellRangeAddress(2, 2, 0, 4));
 		// create the header row for the TestLog (second sheet)
 		Row headerRow_TestLog_Sheet = testLog_Sheet.createRow(0);
 		CellStyle headerRow_CellStyle_TestLog_Sheet = workbook.createCellStyle();
@@ -293,32 +292,19 @@ public class ExcelReportHandler {
 			cell.setCellValue(headerColumns_TestLog_Sheet[i]);
 			cell.setCellStyle(headerRow_CellStyle_TestLog_Sheet);
 		}
-		// create the second row for the TestLog (second sheet)
+		// create the second row for the TestLog sheet
 		Row secondRow_TestLog_Sheet = testLog_Sheet.createRow(1);
 		CellStyle secondRow_CellStyle_TestLog_Sheet = workbook.createCellStyle();
 		Font secondRow_Font_TestLog_Sheet = workbook.createFont();
 		secondRow_Font_TestLog_Sheet.setBold(true);
 		secondRow_Font_TestLog_Sheet.setFontHeightInPoints((short) 12);
-		secondRow_Font_TestLog_Sheet.setColor(IndexedColors.LIGHT_GREEN.getIndex());
+		secondRow_Font_TestLog_Sheet.setColor(IndexedColors.BLACK.getIndex());
 		secondRow_CellStyle_TestLog_Sheet.setFont(secondRow_Font_TestLog_Sheet);
-		secondRow_CellStyle_TestLog_Sheet.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+		secondRow_CellStyle_TestLog_Sheet.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
 		secondRow_CellStyle_TestLog_Sheet.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		Cell secondRow_MergedCell_TestLog_Sheet = secondRow_TestLog_Sheet.createCell(0);
-		secondRow_MergedCell_TestLog_Sheet.setCellValue("Iteration: 1");
+		secondRow_MergedCell_TestLog_Sheet.setCellValue("Test Suite: " + testSuiteName);
 		secondRow_MergedCell_TestLog_Sheet.setCellStyle(secondRow_CellStyle_TestLog_Sheet);
-		// create the third row for the TestLog (second sheet)
-		Row thirdRow_TestLog_Sheet = testLog_Sheet.createRow(2);
-		CellStyle thirdRow_CellStyle_TestLog_Sheet = workbook.createCellStyle();
-		Font thirdRow_Font_TestLog_Sheet = workbook.createFont();
-		thirdRow_Font_TestLog_Sheet.setBold(true);
-		thirdRow_Font_TestLog_Sheet.setFontHeightInPoints((short) 12);
-		thirdRow_Font_TestLog_Sheet.setColor(IndexedColors.BLACK.getIndex());
-		thirdRow_CellStyle_TestLog_Sheet.setFont(thirdRow_Font_TestLog_Sheet);
-		thirdRow_CellStyle_TestLog_Sheet.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-		thirdRow_CellStyle_TestLog_Sheet.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		Cell thirdRow_MergedCell_TestLog_Sheet = thirdRow_TestLog_Sheet.createCell(0);
-		thirdRow_MergedCell_TestLog_Sheet.setCellValue("Test Suite: " + testSuiteName);
-		thirdRow_MergedCell_TestLog_Sheet.setCellStyle(thirdRow_CellStyle_TestLog_Sheet);
 		// resize all columns in the Test_Log (second sheet) to fit the content size
 		// for the first sheet
 		for (int i = 0; i <= 4; i++) {
@@ -351,8 +337,8 @@ public class ExcelReportHandler {
 				cell5.setCellValue(entry.getValue().get(2));
 				rowCount++;
 			}
-			for (int i = 0; i < rowCount - 2; i++) {
-				Row row = testLog_Sheet.getRow(i + 3);
+			for (int i = 0; i < rowCount - 1; i++) {
+				Row row = testLog_Sheet.getRow(i + 2);
 				Cell cell1 = row.getCell(0);
 				cell1.setCellValue(i + 1);
 			}
@@ -361,7 +347,7 @@ public class ExcelReportHandler {
 			Row executionTimeRow = testLog_Sheet.createRow(rowCount + 1);
 			testLog_Sheet.addMergedRegion(new CellRangeAddress(rowCount + 1, rowCount + 1, 0, 4));
 			Cell executionTimeCell = executionTimeRow.createCell(0);
-			executionTimeCell.setCellValue("Execution Duration: " + testSuiteExecutionTime);
+			executionTimeCell.setCellValue("Test Suite Execution Duration: " + testSuiteExecutionTime);
 			CellStyle executionTimeCellStyle = executionTimeCell.getCellStyle();
 			executionTimeCellStyle.setAlignment(HorizontalAlignment.CENTER);
 			executionTimeCell.setCellStyle(executionTimeCellStyle);
@@ -373,7 +359,7 @@ public class ExcelReportHandler {
 			Cell executionStatusCell5 = executionStatusRow.createCell(4);
 			int passCount = 0;
 			int failCount = 0;
-			for (int i = 3; i <= rowCount; i++) {
+			for (int i = 2; i <= rowCount; i++) {
 				Row eachRow = testLog_Sheet.getRow(i);
 				if (eachRow.getCell(3).getStringCellValue().equals("PASS")) {
 					passCount += 1;
@@ -388,22 +374,22 @@ public class ExcelReportHandler {
 			fileOutputStream = new FileOutputStream(excelReportFilePath);
 			workbook.write(fileOutputStream);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new FrameworkException(e);
 		} finally {
 			try {
 				fileInputStream.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new FrameworkException("Not able to close FileInputStream", e);
 			}
 			try {
 				workbook.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new FrameworkException("Not able to close workbook", e);
 			}
 			try {
 				fileOutputStream.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new FrameworkException("Not able to close FileOutputStream", e);
 			}
 		}
 	}
