@@ -286,7 +286,8 @@ public class ExcelReportHandler {
 		headerRow_CellStyle_TestLog_Sheet.setFillForegroundColor(IndexedColors.BLACK.getIndex());
 		headerRow_CellStyle_TestLog_Sheet.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		// create the header row cells for the TestLog (second sheet)
-		String[] headerColumns_TestLog_Sheet = { "Test No.", "Test Name", "Test Description", "Test Execution Status", "Test Execution Time" };
+		String[] headerColumns_TestLog_Sheet = { "Test No.", "Test Name", "Test Description", "Test Execution Status",
+				"Test Execution Time" };
 		for (int i = 0; i < headerColumns_TestLog_Sheet.length; i++) {
 			Cell cell = headerRow_TestLog_Sheet.createCell(i);
 			cell.setCellValue(headerColumns_TestLog_Sheet[i]);
@@ -316,11 +317,11 @@ public class ExcelReportHandler {
 		thirdRow_CellStyle_TestLog_Sheet.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
 		thirdRow_CellStyle_TestLog_Sheet.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		Cell thirdRow_MergedCell_TestLog_Sheet = thirdRow_TestLog_Sheet.createCell(0);
-		thirdRow_MergedCell_TestLog_Sheet.setCellValue(testSuiteName.toLowerCase());
+		thirdRow_MergedCell_TestLog_Sheet.setCellValue("Test Suite: " + testSuiteName);
 		thirdRow_MergedCell_TestLog_Sheet.setCellStyle(thirdRow_CellStyle_TestLog_Sheet);
 		// resize all columns in the Test_Log (second sheet) to fit the content size
 		// for the first sheet
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i <= 4; i++) {
 			testLog_Sheet.autoSizeColumn(i);
 		}
 		return workbook;
