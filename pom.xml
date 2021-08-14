@@ -57,7 +57,7 @@
 					<configuration>
 						<!-- <testFailureIgnore>true</testFailureIgnore> -->
 						<suiteXmlFiles>
-							<suiteXmlFile>src/test/resources/config/main_testng.xml</suiteXmlFile>
+							<suiteXmlFile>src/test/resources/configs/main_testng.xml</suiteXmlFile>
 						</suiteXmlFiles>
 					</configuration>
 				</plugin>
