@@ -252,102 +252,23 @@ public class ExcelReportHandler {
 		FileOutputStream fileOutputStream = null;
 		try {
 			workbook = new HSSFWorkbook();
-			workbook = createCoverPageSheet(workbook, testSuiteName);
 			workbook = createTestLogSheet(workbook, testSuiteName);
 			fileOutputStream = new FileOutputStream(excelReportFilePath);
 			workbook.write(fileOutputStream);
 		} catch (Exception e) {
-			throw new FrameworkException("Not able to create Test Suite Excel Report file");
+			throw new FrameworkException("Not able to create TestSuite ExcelReport file", e);
 		} finally {
 			try {
 				fileOutputStream.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new FrameworkException("Not able to close FileOutputStream", e);
 			}
 			try {
 				workbook.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new FrameworkException("Not able to close Workbook", e);
 			}
 		}
-	}
-
-	public Workbook createCoverPageSheet(Workbook workbook, String testSuiteName) {
-		Sheet coverPage_Sheet = workbook.createSheet("Cover_Page");
-		coverPage_Sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
-		// create the header row style for the CoverPage (first sheet)
-		Row headerRow_CoverPage_Sheet = coverPage_Sheet.createRow(0);
-		CellStyle headerRow_CellStyle_CoverPage_Sheet = workbook.createCellStyle();
-		Font headerRow_Font_CoverPage_Sheet = workbook.createFont();
-		headerRow_Font_CoverPage_Sheet.setBold(true);
-		headerRow_Font_CoverPage_Sheet.setFontHeightInPoints((short) 12);
-		headerRow_Font_CoverPage_Sheet.setColor(IndexedColors.LIGHT_GREEN.getIndex());
-		headerRow_CellStyle_CoverPage_Sheet.setFont(headerRow_Font_CoverPage_Sheet);
-		headerRow_CellStyle_CoverPage_Sheet.setFillForegroundColor(IndexedColors.BLACK.getIndex());
-		headerRow_CellStyle_CoverPage_Sheet.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		// create the header row cell for the CoverPage (first sheet)
-		Cell headerRow_MergedCell_CoverPage_Sheet = headerRow_CoverPage_Sheet.createCell(0);
-		headerRow_MergedCell_CoverPage_Sheet
-				.setCellValue("AUTOMATOR - " + testSuiteName + " - AUTOMATION EXECUTION RESULTS");
-		headerRow_MergedCell_CoverPage_Sheet.setCellStyle(headerRow_CellStyle_CoverPage_Sheet);
-		// create the cell style for the other rows
-		CellStyle otherRows_CellStyle_CoverPage_Sheet = workbook.createCellStyle();
-		Font secondRow_Font_CoverPage_Sheet = workbook.createFont();
-		secondRow_Font_CoverPage_Sheet.setBold(true);
-		secondRow_Font_CoverPage_Sheet.setFontHeightInPoints((short) 12);
-		secondRow_Font_CoverPage_Sheet.setColor(IndexedColors.BLACK.getIndex());
-		otherRows_CellStyle_CoverPage_Sheet.setFont(secondRow_Font_CoverPage_Sheet);
-		otherRows_CellStyle_CoverPage_Sheet.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-		otherRows_CellStyle_CoverPage_Sheet.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		// create the second row cells for the CoverPage (first sheet)
-		Row secondRow_CoverPage_Sheet = coverPage_Sheet.createRow(1);
-		Cell secondRow_FirstCell_CoverPage_Sheet = secondRow_CoverPage_Sheet.createCell(0);
-		secondRow_FirstCell_CoverPage_Sheet.setCellValue("Date & Time");
-		secondRow_FirstCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell secondRow_SecondCell_CoverPage_Sheet = secondRow_CoverPage_Sheet.createCell(1);
-		secondRow_SecondCell_CoverPage_Sheet
-				.setCellValue(": " + new SimpleDateFormat("dd-MMM-yyyy hh-mm-ss aa").format(new Date()));
-		secondRow_SecondCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell secondRow_FourthCell_CoverPage_Sheet = secondRow_CoverPage_Sheet.createCell(3);
-		secondRow_FourthCell_CoverPage_Sheet.setCellValue("Iteration Mode");
-		secondRow_FourthCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell secondRow_FifthCell_CoverPage_Sheet = secondRow_CoverPage_Sheet.createCell(4);
-		secondRow_FifthCell_CoverPage_Sheet.setCellValue(": RUN_ONE_ITERATION_ONLY");
-		secondRow_FifthCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		// create the third row cells for the CoverPage (first sheet)
-		Row thirdRow_CoverPage_Sheet = coverPage_Sheet.createRow(2);
-		Cell thirdRow_FirstCell_CoverPage_Sheet = thirdRow_CoverPage_Sheet.createCell(0);
-		thirdRow_FirstCell_CoverPage_Sheet.setCellValue("Start Iteration");
-		thirdRow_FirstCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell thirdRow_SecondCell_CoverPage_Sheet = thirdRow_CoverPage_Sheet.createCell(1);
-		thirdRow_SecondCell_CoverPage_Sheet.setCellValue(": 1");
-		thirdRow_SecondCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell thirdRow_FourthCell_CoverPage_Sheet = thirdRow_CoverPage_Sheet.createCell(3);
-		thirdRow_FourthCell_CoverPage_Sheet.setCellValue("End Iteration");
-		thirdRow_FourthCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell thirdRow_FifthCell_CoverPage_Sheet = thirdRow_CoverPage_Sheet.createCell(4);
-		thirdRow_FifthCell_CoverPage_Sheet.setCellValue(": 1");
-		thirdRow_FifthCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		// create the fourth row cells for the CoverPage (first sheet)
-		Row fourthRow_CoverPage_Sheet = coverPage_Sheet.createRow(3);
-		Cell fourthRow_FirstCell_CoverPage_Sheet = fourthRow_CoverPage_Sheet.createCell(0);
-		fourthRow_FirstCell_CoverPage_Sheet.setCellValue("Browser / Platform");
-		fourthRow_FirstCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell fourthRow_SecondCell_CoverPage_Sheet = fourthRow_CoverPage_Sheet.createCell(1);
-		fourthRow_SecondCell_CoverPage_Sheet.setCellValue(": CHROME on WINDOWS");
-		fourthRow_SecondCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell fourthRow_FourthCell_CoverPage_Sheet = fourthRow_CoverPage_Sheet.createCell(3);
-		fourthRow_FourthCell_CoverPage_Sheet.setCellValue("Execution on");
-		fourthRow_FourthCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		Cell fourthRow_FifthCell_CoverPage_Sheet = fourthRow_CoverPage_Sheet.createCell(4);
-		fourthRow_FifthCell_CoverPage_Sheet.setCellValue(": Local Machine");
-		fourthRow_FifthCell_CoverPage_Sheet.setCellStyle(otherRows_CellStyle_CoverPage_Sheet);
-		// resize all columns in the Cover_Page (first sheet) to fit the content size
-		// for the first sheet
-		for (int i = 0; i < 5; i++) {
-			coverPage_Sheet.autoSizeColumn(i);
-		}
-		return workbook;
 	}
 
 	public Workbook createTestLogSheet(Workbook workbook, String testSuiteName) {
