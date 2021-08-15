@@ -21,7 +21,9 @@ import com.automator.handlers.fileHandler.PropertyFileHandler;
  * then use the generated xml file to drive the tests. Users can define all the
  * items needed in the testng.xml file from here (e.g. test suite name, test
  * name, parameters, class names, parallel mode, thread count) and they will get
- * dynamically added to the file at runtime.
+ * dynamically added to the file at runtime. To execute from CLIs, run with the
+ * below command: 
+ * mvn -Dexec.mainClass="com.automator.testRunner.DynamicTestNGGenerator" -Dexec.classpathScope=test test-compile exec:java
  * 
  * @author Sumon Dey
  *
