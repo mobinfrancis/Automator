@@ -19,7 +19,8 @@ public class DatabaseUtility {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			log.info("MySQL JDBC driver is loaded successfully");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/opencart", "", "");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/opencart", System.getProperty("un"),
+					System.getProperty("w"));
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(queryStatement);
 		} catch (SQLException e) {
