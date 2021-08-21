@@ -25,6 +25,7 @@
 		<java.version>1.8</java.version>
 		<!-- Logging -->
 		<log4j.version>1.2.17</log4j.version>
+		<slf4j.version>1.7.32</slf4j.version>
 		<!-- Reporting -->
 		<freemarker.version>2.3.30</freemarker.version>
 		<extentreports.version>4.0.0</extentreports.version>
@@ -34,6 +35,10 @@
 		<webdrivermanager.version>3.7.1</webdrivermanager.version>
 		<jackson.version>2.11.2</jackson.version>
 		<mysql-connector.version>8.0.26</mysql-connector.version>
+		<!-- Spring -->
+		<spring-core.version>5.3.3</spring-core.version>
+		<spring-context.version>5.3.3</spring-context.version>
+		<spring-test.version>5.3.3</spring-test.version>
 	</properties>
 
 	<build>
@@ -118,6 +123,16 @@
 			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>${apachePOI.version}</version>
@@ -167,6 +182,21 @@
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>${webdrivermanager.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring-core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring-context.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring-test.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -20,7 +24,9 @@ import com.automator.handlers.reportHandler.FrameworkReportHandler;
 import com.automator.handlers.reportHandler.TestCaseExecutionStatus;
 import com.aventstack.extentreports.ExtentTest;
 
-public class UITest {
+@TestPropertySource("classpath:environments/${env}.properties")
+@ContextConfiguration("classpath*:application-context.xml")
+public class UITest extends AbstractTestNGSpringContextTests {
 
 	private static final Logger log = Logger.getLogger(UITest.class);
 	private FrameworkReportHandler frameworkReportHandler;
@@ -29,13 +35,18 @@ public class UITest {
 	private final String configFileRootPath = System.getProperty("user.dir") + File.separator + "src" + File.separator
 			+ "test" + File.separator + "resources" + File.separator + "configs" + File.separator;
 
+	@Value("${url}")
+	private String url;
+
 	@Test(enabled = true)
 	public void shouldValidateTheNavigationLinks(Method testMethod, ITestContext iTestContext) {
 		String testSuiteName = iTestContext.getSuite().getName();
 		String testMethodName = testMethod.getName();
 		PropertyFileHandler propertyFileHandler = new PropertyFileHandler();
-		String url = propertyFileHandler.getDataFromPropertiesFile("url",
-				configFileRootPath + "ProductSearchTest.properties");
+		/*
+		 * String url = propertyFileHandler.getDataFromPropertiesFile("url",
+		 * configFileRootPath + "ProductSearchTest.properties");
+		 */
 		ItemsFunctionality itemsFunctionality = new ItemsFunctionality(frameworkReportHandler, extentTest.get(),
 				testSuiteName, testMethodName);
 		itemsFunctionality.launch("Firefox");
