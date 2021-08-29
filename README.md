@@ -7,7 +7,7 @@
 ###  :earth_asia: Introduction
 Automator is an Web UI Test Automation framework created using Selenium WebDriver and TestNG (configured to use dynamically created TestNG xml files) with reporting configured for ExtentReport, Excel, JSON and with Database (MySQL) integration.
 
-![Web UI Test Automation Framework using Selenium WebDriver and TestNG](images/JavaConcepts.gif)
+![Automator - A Web UI Test Automation Framework using Selenium WebDriver and TestNG](images/Automator.PNG)
 
 ***
 
